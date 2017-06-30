@@ -6,3 +6,4 @@ style.css.map
 bundle.js
 db/*
 !db/.keep
+.env

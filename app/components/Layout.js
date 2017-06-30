@@ -1,34 +1,25 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
+import React, {PureComponent} from 'react';
+import {connect} from 'react-redux';
+import {Route, Switch} from 'react-router-dom'
 
-import TextField from 'material-ui/TextField';
+import Form from './step-2/edit.form'
+import Login from './Login'
+import Profile from './Profile/Profile'
+import Training from './Training/Training'
+import ErrorPage from './ErrorPage.js'
 
-import change from '../actions/test.action';
-
-const mapStateToProps = ({ test }) => {
-	return { test };
-}
-
-const mapDispatchToProps = (dispatch) => {
-	return bindActionCreators({
-		change
-	}, dispatch);
-}
 
 class Layout extends PureComponent {
-	render() {
-		return (
-			<div>
-				<TextField
-					name='testfield'
-					floatingLabelText='test field'
-					value={this.props.test}
-					onChange={(e) => this.props.change(e.target.value)}
-				/>
-			</div>
-		);
-	}
+    render() {
+        return (
+            <Switch>
+                <Route exact path='/' component={Login}/>
+                <Route path='/profile' component={Form}/>
+                <Route path='/training' component={Training}/>
+                <Route component={ErrorPage}/>
+            </Switch>
+        );
+    }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Layout);
+export default connect()(Layout);

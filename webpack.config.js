@@ -2,7 +2,7 @@ const webpack = require("webpack");
 const path = require("path");
 
 const DEV = path.resolve(__dirname+"/app");
-const OUTPUT = path.resolve(__dirname+"/public");
+const OUTPUT = path.resolve(__dirname+"/backend/public");
 
 const config = {
 	entry: DEV + "/App.js",
@@ -15,6 +15,7 @@ const config = {
 		contentBase: 'public',
 		historyApiFallback: true
 	},
+	devtool: 'inline-source-map',
 	module: {
 		loaders: [
 			{
@@ -28,6 +29,10 @@ const config = {
 			{
 				test: /\.sass?$/,
 				loader: [ 'style-loader', 'css-loader', 'sass-loader' ]
+			},
+			{
+				test: /\.css?$/,
+				loader: [ 'style-loader', 'css-loader' ]
 			}
 		]
 	}
