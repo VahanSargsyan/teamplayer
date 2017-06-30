@@ -5,7 +5,7 @@ import TextField from 'material-ui/TextField';
 import change from '../../actions/test.action';
 import Chip from 'material-ui/Chip';
 import RaisedButton from 'material-ui/RaisedButton';
-
+import {Motion, Spring} from 'react-motion';
 import UploadPreview from 'material-ui-upload/UploadPreview';
 
 /////
@@ -29,7 +29,10 @@ class Form extends PureComponent {
             fbLink: "",
             education: "",
             educationDisabled: true,
-            user: {}
+            user: {},
+            style: {
+
+            }
         };
         this.styles = {
           chip: {
@@ -111,12 +114,14 @@ handleChange(event) {
         this.setState({ jobDescription: description })
     }
     handleChangeFblink = (fblink) => {
+         console.log(this.educationState())
         this.setState({ fblink })
     }
+    educationState = () => this.state.education.lengt > 2
     handleChangeEducation = (education) => {
-        this.animation()
-        const educationDisabled = this.state.education.lengt > 0 ? true : false
-        console.log(education, educationDisabled)
+        // this.animation()
+        const educationDisabled = this.educationState()
+        console.log(education, this.educationState())
         this.setState({ 
             education: education, 
             educationDisabled: educationDisabled })
@@ -132,14 +137,6 @@ handleChange(event) {
                 this.div.style.height += 1;
             }
         },50)
-
-
-
-
-
-
-
-
     }
     submit = () => {
         const { pictures, firstName,  lastName, position, hobbies} = this.state
@@ -179,58 +176,58 @@ handleChange(event) {
     onChange = (pictures) => {
         console.log(pictures)
         this.setState({pictures})};
- 
-
-
-
-
 
     render() {
         return (
+            <ValidatorForm
+            onSubmit={this.submit}
+            >
                 <div className='test-style'>
-                   <UploadPreview
+                    <UploadPreview
                         title="Picture"
                         label="Add"
                         initialItems={this.state.pictures}
                         onChange={this.onChange}
                         type={`*.jpg`}
-                        />
+                    />
 
 
-                    <TextField 
+                    <TextValidator 
                         name = 'First Name'
                         floatingLabelText='First Name'
                         //defaultValue={this.state.firstName}
                         onChange = {e => {this.handleChangeFirstName(e.target.value)}}
-                        value = {this.state.firstName}   
-                        errorText="This field is required"                 
-                        />
+                        value = {this.state.firstName} 
+                        validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
+                        errorMessages={['This field is required', 'Name can contain only latin letters', 'Name must be between 2 and 16 characters']}             
+                    />
                     <br />
-                    <TextField 
+                    <TextValidator 
                         name = "Last Name"
                         floatingLabelText='Last Name'
                         //defaultValue={this.state.lastName}
                         onChange = {e => {this.handleChangeLastName(e.target.value)}}
                         value = {this.state.lastName}
-                        errorText="This field is required"                    
-                        />
+                        validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
+                        errorMessages={['This field is required', 'Last Name can contain only latin letters', 'Last Name must be between 2 and 16 characters']}             
+                    />
                     <br />
-                    <TextField 
+                    <TextValidator 
                         name = "position"
                         floatingLabelText='Position'
                         onChange = {e => {this.handleChangePosition(e.target.value)}}
-                        value = {this.state.position} 
-                        errorText="This field is required"                   
-                        
+                        value = {this.state.position}validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
+                        errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}             
                     />
                     <br />
-                    <TextField 
+                    <TextValidator 
                         name = "Fb link"
                         floatingLabelText='Fb link'
                         onChange = {e => {this.handleChangeFblink(e.target.value)}}
-                        value = {this.state.fblink}                    
-                        
-                        />
+                        value = {this.state.fblink}
+                        validators={[ 'matchRegexp:(?:http://|https://)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?']}
+                        errorMessages={['Wrong Facebook link']}             
+                    />
                     <br />
                    
                     <div className="education" id="eduDiv" >
@@ -239,20 +236,19 @@ handleChange(event) {
                             floatingLabelText='Last Education'
                             onChange = {e => {this.handleChangeEducation(e.target.value)}}
                             value = {this.state.education}        
-                              
-                            />
+                        />
+                        <br/>
                         <TextField 
                             name = "education_2"
                             floatingLabelText='Faculty'
                             disabled = { this.state.educationDisabled }
-                            
-                            />
-                            
+                        />
+                        <br/>   
                         <TextField 
                             name = "education_3"
                             floatingLabelText ='Specialization'
                             disabled = { this.state.educationDisabled }
-                            />        
+                        />        
                     </div>
                     <br />
                     <div style={this.styles.wrapper}> 
@@ -265,30 +261,27 @@ handleChange(event) {
                         onChange = {e => {this.handleChangeHobby(e.target.value)}}
                         value = {this.state.currentHobby}
                         onKeyPress = { e => this.addChip(e) }
-                        
-                        />
+                    />
                     <br />    
                     <TextField
                         floatingLabelText="Job Description"
                         multiLine={true}
-                        rows={3}
+                        rows={1}
                         onChange = {e => {this.handleChangeJobDescription(e.target.value)}}
                         value = {this.state.jobDescription}
-                        
-                        />
+                     />
                     <br /> 
                     <br />   
                     <br />   
-                    
-
-
                     <RaisedButton 
-                    label="Submit" 
-                    primary = { true } 
-                    disabled = { this.state.submitIsDisabled }
-                    onClick = { this.submit}
+                        label="Submit" 
+                        primary = { true } 
+                        disabled = { this.state.submitIsDisabled }
+                        onClick = { this.submit}
                     />
+                    
                 </ div>    
+            </ValidatorForm>
         );
     }
 }
