@@ -2,6 +2,9 @@ const mongoose = require('mongoose');
 const Schema = mongoose.Schema;
 
 module.exports = function() {
+    const hobbiesSchema = new Schema({
+        label : String
+    })
     const Employee = new Schema({
         googleId: String,
         email: String,
@@ -11,9 +14,9 @@ module.exports = function() {
         picture: String,
         position: String,
         jobDescription: String,
-        hobbies: Array,
+        hobbies: [hobbiesSchema],
         fbLink: String,
-        trainingStep: Number
+        trainingStep: mongoose.Schema.Types.ObjectId
     });
     mongoose.model("Employee", Employee);
 };

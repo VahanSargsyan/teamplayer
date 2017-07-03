@@ -19,15 +19,15 @@ const validation = Joi.object().keys({
 })
 
 createProfile.post('/', upload.single("picture"), (req, res) => {
-    
-    Joi.validate({ 
-        firstName: req.body.firstName, 
+
+    Joi.validate({
+        firstName: req.body.firstName,
         lastName: req.body.lastName,
         position: req.body.position,
         fbLink: req.body.fbLink,
         position: req.body.position,
         picture: req.file.originalname
-    }, 
+    },
     validation, function (err, value) {
         if(err){
             console.log(err.toString())
@@ -42,9 +42,9 @@ createProfile.post('/', upload.single("picture"), (req, res) => {
                 if (err) throw err;
                 const Employee = mongoose.model('Employee')
                 Employee.update(
-                    {_id: req.body._id}, 
-                    { $set: 
-                        {firstName: req.body.firstName, 
+                    {_id: req.user._id},
+                    { $set:
+                        {firstName: req.body.firstName,
                         lastName: req.body.lastName,
                         position: req.body.position,
                         jobDescription: req.body.jobDescription,
@@ -52,14 +52,13 @@ createProfile.post('/', upload.single("picture"), (req, res) => {
                         fbLink: req.body.fbLink,
                         picture: picturePath
                     }},
-                    {multi: true}).exec();    
+                    {multi: true}).exec();
                 console.log(req.body.hobbies.toString())
             });
 
-            res.send('new user added')
+            res.send({added: true})
         }
     });
 });
 
 module.exports = createProfile;
-

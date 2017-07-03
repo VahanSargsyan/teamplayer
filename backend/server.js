@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const api = require('./api');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
 const Joi = require('joi');
 
 require('./models/index').initialize();
@@ -39,9 +40,18 @@ app.get('/auth/google', passport.authenticate('google', { scope: [
 ] }));
 
 app.get('/auth/google/callback', passport.authenticate('google', {
-	successRedirect: '/', failureRedirect: '/auth/google' }));
+	successRedirect: '/profile', failureRedirect: '/auth/google' }));
 
 app.use('/api', api);
+
+app.get('/*', (req, res) => {
+	res.sendFile(path.join(__dirname, 'public', 'index.html'));
+});
+
+
+
+
+
 
 app.listen(PORT, () => {
     console.log(`Listening on port ${PORT}`);

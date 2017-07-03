@@ -12,7 +12,7 @@ import UploadPreview from 'material-ui-upload/UploadPreview';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
 ////
 
- 
+
 class Form extends PureComponent {
    constructor(props) {
         super(props);
@@ -42,7 +42,7 @@ class Form extends PureComponent {
       },
           wrapper: {
             width: '60%',
-            margin: 'auto',  
+            margin: 'auto',
             display: 'flex',
             flexWrap: 'wrap',
       },
@@ -63,14 +63,14 @@ handleChange(event) {
         user[event.target.name] = event.target.value;
         this.setState({ user });
     }
- 
+
  handleRequestDelete = (key) => {
     const hobbies = this.state.hobbies
     const index = this.findHobby(hobbies, key)
     console.log(index)
     const before = this.state.hobbies.slice(0,index)
     const after =   this.state.hobbies.slice(index + 1)
-    
+
     const newHobbis = [...before, ...after];
     this.setState({ hobbies: newHobbis})
 
@@ -91,10 +91,10 @@ handleChange(event) {
 
 
     handleChangeHobby = (hobby) => {
-        
+
         this.setState({ currentHobby: hobby })
     }
-    
+
     handleChangeFirstName = (name) => {
         const state = this.state;
         const disabled = this.state.firstName != "" && state.lastName != "" && state.position != "" ? false : true
@@ -109,7 +109,7 @@ handleChange(event) {
         const state = this.state;
         const disabled = this.state.firstName != "" && state.lastName != "" && state.position != "" ? false : true
         this.setState({ position, submitIsDisabled: disabled  })
-    }    
+    }
     handleChangeJobDescription = (description) => {
         this.setState({ jobDescription: description })
     }
@@ -122,8 +122,8 @@ handleChange(event) {
         // this.animation()
         const educationDisabled = this.educationState()
         console.log(education, this.educationState())
-        this.setState({ 
-            education: education, 
+        this.setState({
+            education: education,
             educationDisabled: educationDisabled })
     }
     animation = () => {
@@ -139,23 +139,24 @@ handleChange(event) {
         },50)
     }
     submit = () => {
-        const { pictures, firstName,  lastName, position, hobbies} = this.state
-        fetch('http://localhost:3000/api/createProfile', {
+        const { pictures, firstName,  lastName, position, hobbies, fblink, jobDescription} = this.state
+        fetch('http://localhost:8081/api/createProfile', {
                 method:'post',
                 headers: new Headers({
                     'Content-Type' : 'application/json',
-                    
+
                 }),
-                'body' : JSON.stringify({ pictures, firstName,  lastName, position, hobbies})
-                
+                'body' : JSON.stringify({ pictures, firstName,  lastName, position, hobbies, fblink, jobDescription}),
+                credentials: 'include'
+
         })
             .then(result => result.json())
             .then(result => {
-                if (result === `new user added`) {
-                    window.location.replace("/api/traning")
+                if (result.added === true) {
+                    this.props.history.replace("/training");
                 }
             })
-    }    
+    }
 
   addChip(e) {
       const code = e.keyCode ? e.keyCode : e.which;
@@ -169,7 +170,7 @@ handleChange(event) {
                 currentHobby: ''
             })
           }
-            
+
       }
   }
 
@@ -192,69 +193,69 @@ handleChange(event) {
                     />
 
 
-                    <TextValidator 
+                    <TextValidator
                         name = 'First Name'
                         floatingLabelText='First Name'
                         //defaultValue={this.state.firstName}
                         onChange = {e => {this.handleChangeFirstName(e.target.value)}}
-                        value = {this.state.firstName} 
+                        value = {this.state.firstName}
                         validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
-                        errorMessages={['This field is required', 'Name can contain only latin letters', 'Name must be between 2 and 16 characters']}             
+                        errorMessages={['This field is required', 'Name can contain only latin letters', 'Name must be between 2 and 16 characters']}
                     />
                     <br />
-                    <TextValidator 
+                    <TextValidator
                         name = "Last Name"
                         floatingLabelText='Last Name'
                         //defaultValue={this.state.lastName}
                         onChange = {e => {this.handleChangeLastName(e.target.value)}}
                         value = {this.state.lastName}
                         validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
-                        errorMessages={['This field is required', 'Last Name can contain only latin letters', 'Last Name must be between 2 and 16 characters']}             
+                        errorMessages={['This field is required', 'Last Name can contain only latin letters', 'Last Name must be between 2 and 16 characters']}
                     />
                     <br />
-                    <TextValidator 
+                    <TextValidator
                         name = "position"
                         floatingLabelText='Position'
                         onChange = {e => {this.handleChangePosition(e.target.value)}}
                         value = {this.state.position}validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
-                        errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}             
+                        errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}
                     />
                     <br />
-                    <TextValidator 
+                    <TextValidator
                         name = "Fb link"
                         floatingLabelText='Fb link'
                         onChange = {e => {this.handleChangeFblink(e.target.value)}}
                         value = {this.state.fblink}
                         validators={[ 'matchRegexp:(?:http://|https://)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?']}
-                        errorMessages={['Wrong Facebook link']}             
+                        errorMessages={['Wrong Facebook link']}
                     />
                     <br />
-                   
+
                     <div className="education" id="eduDiv" >
-                        <TextField 
+                        <TextField
                             name = "education_1"
                             floatingLabelText='Last Education'
                             onChange = {e => {this.handleChangeEducation(e.target.value)}}
-                            value = {this.state.education}        
+                            value = {this.state.education}
                         />
                         <br/>
-                        <TextField 
+                        <TextField
                             name = "education_2"
                             floatingLabelText='Faculty'
                             disabled = { this.state.educationDisabled }
                         />
-                        <br/>   
-                        <TextField 
+                        <br/>
+                        <TextField
                             name = "education_3"
                             floatingLabelText ='Specialization'
                             disabled = { this.state.educationDisabled }
-                        />        
+                        />
                     </div>
                     <br />
-                    <div style={this.styles.wrapper}> 
+                    <div style={this.styles.wrapper}>
                         {this.state.hobbies.map(hobby => this.renderChip(hobby))}
-                    </div> 
-                    <TextField 
+                    </div>
+                    <TextField
                         name = "hobbies"
                         hintText="After typing hit Enter"
                         floatingLabelText='Hobbies'
@@ -262,7 +263,7 @@ handleChange(event) {
                         value = {this.state.currentHobby}
                         onKeyPress = { e => this.addChip(e) }
                     />
-                    <br />    
+                    <br />
                     <TextField
                         floatingLabelText="Job Description"
                         multiLine={true}
@@ -270,17 +271,17 @@ handleChange(event) {
                         onChange = {e => {this.handleChangeJobDescription(e.target.value)}}
                         value = {this.state.jobDescription}
                      />
-                    <br /> 
-                    <br />   
-                    <br />   
-                    <RaisedButton 
-                        label="Submit" 
-                        primary = { true } 
+                    <br />
+                    <br />
+                    <br />
+                    <RaisedButton
+                        label="Submit"
+                        primary = { true }
                         disabled = { this.state.submitIsDisabled }
                         onClick = { this.submit}
                     />
-                    
-                </ div>    
+
+                </ div>
             </ValidatorForm>
         );
     }

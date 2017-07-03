@@ -9,10 +9,11 @@ export const changeTrainingStep = (nextStepIndex, nextStepId, fn) => {
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({trainingStep: nextStepId})
+        body: JSON.stringify({trainingStep: nextStepId}),
+        credentials: 'include'
     }
     return dispatch => {
-        fetch(`http://localhost:8081/api/training/${_id}`, initObj)
+        fetch('http://localhost:8081/api/training/step', initObj)
         .then(result => result.json())
         .then(result => {
             dispatch(changeTrainingStepSuccess(nextStepIndex))
@@ -31,11 +32,10 @@ export const changeTrainingStepSuccess = nextStepIndex => {
 }
 
 export const getTrainingData = () => {
-    const _id = 2
     return dispatch => {
-        const getAllEmployees = fetch('http://localhost:8081/api/training')
+        const getAllEmployees = fetch('http://localhost:8081/api/training', {credentials: 'include'})
             .then(result => result.json())
-        const getTrainingStep = fetch(`http://localhost:8081/api/training/step/${_id}`)
+        const getTrainingStep = fetch('http://localhost:8081/api/training/step', {credentials: 'include'})
             .then(result => result.json())
         Promise.all([getAllEmployees, getTrainingStep])
         .then(result => dispatch(getTrainingDataSuccess(result)))
@@ -54,7 +54,7 @@ export const getTrainingDataSuccess = data => {
         type: GET_TRAINING_DATA,
         payload: {
             employees,
-            trainingStep: trainingStep + 1
+            trainingStep: (trainingStep != -1) ? trainingStep : 0
         }
     }
 }
