@@ -3,6 +3,8 @@ npm-debug.log
 style.css
 style.css.map
 .sass-cache
-bundle.js
 db/*
 !db/.keep
+.env
+*.css
+bundle.js

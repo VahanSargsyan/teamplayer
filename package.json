@@ -1,44 +1,67 @@
 {
-	"name": "teamplayer",
-	"version": "1.0.0",
-	"description": "Helps new employees get to know the team",
-	"scripts": {
-		"start": "mongod --dbpath db & sleep 5 && nodemon backend/server.js & webpack-dev-server"
-	},
-	"authors": [
-		"Erik Davtyan <erikdavtyan@gmail.com>",
-		"Hayk Hayrapetyan <haykhairapetyan@gmail.com>",
-		"Andranik Sargsyan <andraniksargsyan21@gmail.com>",
-		"Ani Alaverdyan <anialaverdyan2@gmail.com>",
-		"Vahan Sargsyan <vahansargsyan1310@gmail.com>"
-	],
-	"license": "MIT",
-	"devDependencies": {
-		"babel-core": "^6.24.0",
-		"babel-loader": "^6.4.1",
-		"babel-preset-es2015": "^6.24.0",
-		"babel-preset-react": "^6.23.0",
-		"babel-preset-stage-2": "^6.22.0",
-		"css-loader": "^0.27.3",
-		"node-sass": "^4.5.0",
-		"sass-loader": "^6.0.3",
-		"style-loader": "^0.15.0",
-		"webpack": "^2.2.1",
-		"webpack-dev-server": "^2.4.2"
-	},
-	"dependencies": {
-		"body-parser": "^1.17.2",
-		"cookie-parser": "^1.4.3",
-		"cors": "^2.8.3",
-		"express": "^4.15.3",
-		"material-ui": "^0.18.4",
-		"mongoose": "^4.11.0",
-		"nodemon": "^1.11.0",
-		"react": "^15.6.1",
-		"react-dom": "^15.6.1",
-		"react-redux": "^5.0.5",
-		"react-tap-event-plugin": "^2.0.1",
-		"redux": "^3.7.1",
-		"redux-thunk": "^2.2.0"
-	}
+  "name": "teamplayer",
+  "version": "1.0.0",
+  "description": "Helps new employees get to know the team",
+  "scripts": {
+    "start": "node backend/server.js",
+    "build": "webpack",
+    "db": "mongod --dbpath db",
+    "server": "nodemon backend/server.js",
+    "frontend": "webpack-dev-server",
+	"watch": "weback --watch"
+  },
+  "engines": {
+    "node": "8.1.2"
+  },
+  "authors": [
+    "Erik Davtyan <erikdavtyan@gmail.com>",
+    "Hayk Hayrapetyan <haykhairapetyan@gmail.com>",
+    "Andranik Sargsyan <andraniksargsyan21@gmail.com>",
+    "Ani Alaverdyan <anialaverdyan2@gmail.com>",
+    "Vahan Sargsyan <vahansargsyan1310@gmail.com>"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "babel-core": "^6.24.0",
+    "babel-loader": "^6.4.1",
+    "babel-preset-es2015": "^6.24.0",
+    "babel-preset-react": "^6.23.0",
+    "babel-preset-stage-2": "^6.22.0",
+    "css-loader": "^0.27.3",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^6.0.3",
+    "style-loader": "^0.15.0",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "cors": "^2.8.3",
+    "dotenv": "^4.0.0",
+    "express": "^4.15.3",
+    "express-session": "^1.15.3",
+    "express-validation": "^1.0.2",
+    "joi": "^10.6.0",
+    "material-ui": "^0.18.4",
+    "material-ui-upload": "^1.1.5",
+    "mongodb": "^2.2.29",
+    "mongoose": "^4.10.8",
+    "multer": "^1.3.0",
+    "nodemon": "^1.11.0",
+    "passport": "^0.3.2",
+    "passport-google-oauth": "^1.0.0",
+    "passport-google-oauth2": "^0.1.6",
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-material-ui-form-validator": "^0.5.0",
+    "react-motion": "^0.5.0",
+    "react-redux": "^5.0.5",
+    "react-router-dom": "^4.1.1",
+    "react-tap-event-plugin": "^2.0.1",
+    "react-typist": "^1.1.1",
+    "redux": "^3.7.1",
+    "redux-thunk": "^2.2.0",
+    "uuid": "^3.1.0"
+  }
 }
