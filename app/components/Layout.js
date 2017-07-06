@@ -8,7 +8,7 @@ import Profile from './Profile/Profile';
 import Training from './Training/Training';
 import Team from './Team/Team';
 import ErrorPage from './ErrorPage.js';
-
+import Quizes from './Quiz/Quizes';
 
 class Layout extends PureComponent {
     render() {
@@ -18,10 +18,11 @@ class Layout extends PureComponent {
                 <Route path='/profile' component={Form}/>
                 <Route path='/training' component={Training}/>
                 <Route path='/team' component={Team}/>
+				<Route path='/quiz' component={Quizes}/>
                 <Route component={ErrorPage}/>
             </Switch>
         );
     }
 }
 
-export default Layout;
+export default withRouter(Layout);

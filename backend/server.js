@@ -4,7 +4,6 @@ const express = require('express');
 const session = require('express-session');
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const api = require('./api');
 const passport = require('passport');
 const cookieParser = require('cookie-parser');
 const fs = require('fs');
@@ -13,6 +12,7 @@ const Joi = require('joi');
 require('./models/index').initialize();
 require('dotenv').config();
 require('./passport');
+const api = require('./api');
 
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB);

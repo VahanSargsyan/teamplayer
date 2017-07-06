@@ -12,7 +12,7 @@ const config = {
 	},
 	devServer: {
 		inline: true,
-		contentBase: 'public',
+		contentBase: path.join(__dirname, 'backend', 'public'),
 		historyApiFallback: true
 	},
 	devtool: 'inline-source-map',

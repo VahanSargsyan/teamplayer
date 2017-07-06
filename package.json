@@ -8,7 +8,7 @@
     "db": "mongod --dbpath db",
     "server": "nodemon backend/server.js",
     "frontend": "webpack-dev-server",
-	"watch": "weback --watch"
+	"watch": "webpack --watch"
   },
   "engines": {
     "node": "8.1.2"
