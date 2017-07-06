@@ -36,11 +36,26 @@ app.use(cors({methods: ['GET', 'POST', 'PUT', 'DELETE'], credentials: true, orig
 
 app.get('/auth/google', passport.authenticate('google', { scope: [
 	'https://www.googleapis.com/auth/plus.login',
-	'https://www.googleapis.com/auth/userinfo.email'
+	'https://www.googleapis.com/auth/userinfo.email',
+		'https://www.googleapis.com/auth/userinfo.profile'
 ]}));
 
 app.get('/auth/google/callback', passport.authenticate('google', {
-	successRedirect: '/profile', failureRedirect: '/auth/google' }));
+	successRedirect: '/loginSuccess', failureRedirect: '/auth/google' }));
+
+app.get('/loginSuccess', (req, res)=>{
+	if(req.user && !req.user.position)
+		res.redirect('/createProfile')
+	else if(req.user && req.user.trainingStep != 'finished')
+		res.redirect('/training')
+	else
+		res.redirect('/team')
+})
+
+app.get('/logout', (req, res) => {
+	req.session.destroy()
+	res.redirect('/')
+})
 
 app.use('/api', api);
 

@@ -15,6 +15,7 @@ const validation = Joi.object().keys({
     lastName: Joi.string().min(2).max(25).regex(/^[a-zA-Z]+$/).required(),
     fbLink: Joi.string().regex(/(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/),
     position: Joi.string().min(2).max(16).regex(/^[a-zA-Z ]+$/),
+    gender: Joi.string().required()
 })
 
 createProfile.post('/', (req, res) => {
@@ -25,6 +26,7 @@ createProfile.post('/', (req, res) => {
         position: req.body.position,
         fbLink: req.body.fbLink,
         position: req.body.position,
+        gender: req.body.gender
     },
     validation, function (err, value) {
         if(err){
@@ -40,7 +42,9 @@ createProfile.post('/', (req, res) => {
                     jobDescription: req.body.jobDescription,
                     hobbies: req.body.hobbies,
                     fbLink: req.body.fbLink,
-                    picture: req.body.pictures[Object.keys(req.body.pictures)[0]] 
+                    picture: req.body.pictures[Object.keys(req.body.pictures)[0]],
+                    gender: req.body.gender,
+                    bio: req.body.bio
                 }},
                 {multi: true}).exec();
             res.send({added: true})

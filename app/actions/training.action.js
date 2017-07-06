@@ -1,9 +1,8 @@
-export const CHANGE_TRAINING_STEP_SUCCESS = "training/CHANGE_TRAINING_STEP_SUCCESS"
-export const GET_TRAINING_DATA = "training/GET_TRAINING_DATA"
-export const CHANGE_RENDER_MESSAGE = "training/CHANGE_RENDER_MESSAGE"
+export const CHANGE_TRAINING_STEP_SUCCESS = "TRAINING/CHANGE_TRAINING_STEP_SUCCESS"
+export const GET_TRAINING_DATA = "TRAINING/GET_TRAINING_DATA"
+export const CHANGE_RENDER_MESSAGE = "TRAINING/CHANGE_RENDER_MESSAGE"
 
 export const changeTrainingStep = (nextStepIndex, nextStepId, fn) => {
-    const _id = 2
     const initObj = {
         method: "PUT",
         headers: {
@@ -16,7 +15,9 @@ export const changeTrainingStep = (nextStepIndex, nextStepId, fn) => {
         fetch(`${FETCH_URL}/api/training/step`, initObj)
         .then(result => result.json())
         .then(result => {
-            dispatch(changeTrainingStepSuccess(nextStepIndex))
+            if(nextStepId != 'finished') {
+                dispatch(changeTrainingStepSuccess(nextStepIndex))
+            }
             fn()
         })
         .catch(error => error)

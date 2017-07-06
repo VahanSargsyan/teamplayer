@@ -16,7 +16,9 @@ module.exports = function() {
         jobDescription: String,
         hobbies: [hobbiesSchema],
         fbLink: String,
-        trainingStep: mongoose.Schema.Types.ObjectId,
+        trainingStep: String,
+        gender: String,
+        bio: String,
         rightAnswers: Array,
         quizRezults: Array
     });

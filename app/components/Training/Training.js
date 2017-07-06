@@ -37,7 +37,13 @@ class Training extends Component {
     componentDidMount() {
         this.props.getTrainingData()
     }
-    changeTrainingStep = (value, fn) => {
+    finishSteps = () => {
+
+        this.props.changeTrainingStep(null, 'finished', ()=>{
+            this.props.history.push('team')
+        })
+    }
+    changeTrainingStep = (value) => {
         const nextStepIndex = this.props.trainingStep + value
         const nextStepId = this.props.employees[nextStepIndex]['_id']
         this.props.changeTrainingStep(nextStepIndex, nextStepId, ()=>{
@@ -58,12 +64,10 @@ class Training extends Component {
 
         if (this.props.trainingStep === this.props.employees.length - 1) {
 
-            return <RaisedButton label="Finish" primary={true} className='button'
-                 containerElement={<Link to="/team" />} />
-
-
+            return <RaisedButton label="Finish" primary className='button'
+                 onTouchTap={this.finishSteps}/>
         } else {
-            return <RaisedButton label="Next" primary={true} className='button'
+            return <RaisedButton label="Next" primary className='button'
                 onTouchTap={this.increaseStep}/>
         }
     }
@@ -109,7 +113,7 @@ class Training extends Component {
                     <div className="buttons">
                         {this.renderBackButton()}
                         {this.renderNextButton()}
-                        <LinearProgress mode="determinate" style={{"height": "25px", "margin-top": "40px"}}
+                        <LinearProgress mode="determinate" style={{"height": "25px", "marginTop": "40px"}}
                              value={this.props.trainingStep  * 100 / (this.props.employees.length-1 )} />
                     </div>
                 </div>
