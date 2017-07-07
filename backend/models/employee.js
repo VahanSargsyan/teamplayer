@@ -19,8 +19,10 @@ module.exports = function() {
         trainingStep: String,
         gender: String,
         bio: String,
+        education: String,
         rightAnswers: Array,
         quizRezults: Array
+
     });
     mongoose.model("Employee", Employee);
 };

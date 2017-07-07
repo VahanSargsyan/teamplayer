@@ -127,13 +127,17 @@ handleChange(event) {
     handleChangeJobDescription = (description) => {
         this.setState({ jobDescription: description })
     }
+
+    handleChangeFbLink = (fbLink) => {
+        this.setState({ fbLink })
+      
     handleChangeBio = (e) => {
         const state = this.state
         const disabled = this.state.firstName != "" && state.lastName != "" && state.position != "" ? false : true && this.state.gender != ""
         this.setState({ bio: e.target.value, submitIsDisabled: disabled  })
-    }
-    handleChangeFblink = (fblink) => {
-        this.setState({ fblink })
+    } 
+    
+    
     }
     educationState = () => this.state.education.lengt > 2
     handleChangeEducation = (education) => {
@@ -154,14 +158,18 @@ handleChange(event) {
         },50)
     }
     submit = () => {
-        const { pictures, firstName,  lastName, position, hobbies, fblink, jobDescription, bio, gender} = this.state
+
+        const { pictures, firstName,  lastName, position, hobbies, fbLink, jobDescription, bio, gender} = this.state
+
         fetch(`${FETCH_URL}/api/createProfile`, {
                 method:'post',
                 headers: new Headers({
                     'Content-Type' : 'application/json',
 
                 }),
-                'body' : JSON.stringify({ pictures, firstName,  lastName, position, hobbies, fblink, jobDescription, bio, gender}),
+
+                'body' : JSON.stringify({ pictures, firstName,  lastName, position, hobbies, fbLink, jobDescription, bio, gender}),
+
                 credentials: 'include'
 
         })
@@ -244,15 +252,15 @@ handleChange(event) {
                         name = "position"
                         floatingLabelText='Position'
                         onChange = {e => {this.handleChangePosition(e.target.value)}}
-                        value = {this.state.position}validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
+                        value = {this.state.position}validators={['required', 'matchRegexp:^[a-zA-Z ]+$', 'matchRegexp:^[a-zA-Z ]{2,16}$']}
                         errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}
                     />
                     <br />
                     <TextValidator
                         name = "Fb link"
                         floatingLabelText='Fb link'
-                        onChange = {e => {this.handleChangeFblink(e.target.value)}}
-                        value = {this.state.fblink}
+                        onChange = {e => {this.handleChangeFbLink(e.target.value)}}
+                        value = {this.state.fbLink}
                         validators={[ 'matchRegexp:(?:http://|https://)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?']}
                         errorMessages={['Wrong Facebook link']}
                     />

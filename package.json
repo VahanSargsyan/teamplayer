@@ -9,6 +9,7 @@
     "server": "nodemon backend/server.js",
     "frontend": "webpack-dev-server",
     "watch": "webpack --watch"
+
   },
   "engines": {
     "node": "8.1.2"
@@ -36,6 +37,8 @@
   },
   "dependencies": {
     "body-parser": "^1.17.2",
+    "bulma": "^0.4.2",
+    "bulma-react": "0.0.8",
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.3",
     "dotenv": "^4.0.0",
@@ -64,6 +67,7 @@
     "react-typist": "^1.1.1",
     "redux": "^3.7.1",
     "redux-thunk": "^2.2.0",
+    "require_optional": "^1.0.1",
     "uuid": "^3.1.0"
   }
 }

@@ -8,6 +8,8 @@ import Profile from './Profile/Profile';
 import Training from './Training/Training';
 import Team from './Team/Team';
 import ErrorPage from './ErrorPage.js';
+
+import Grid from './Grid/grid';
 import Auth from './RouteMiddleware/Auth';
 import Guest from './RouteMiddleware/Guest';
 import Quizes from './Quiz/Quizes';
@@ -29,6 +31,7 @@ class Layout extends PureComponent {
     }
     render() {
         return (
+
             <div>
                 {this.renderHeader()}
                 <Switch>
@@ -41,6 +44,7 @@ class Layout extends PureComponent {
                     <Route component={ErrorPage}/>
                 </Switch>
             </div>
+
         );
     }
 }

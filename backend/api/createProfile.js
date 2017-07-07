@@ -18,8 +18,18 @@ const validation = Joi.object().keys({
     gender: Joi.string().required()
 })
 
-createProfile.post('/', (req, res) => {
 
+createProfile.get('/', (req, res) => {
+    const Employee = mongoose.model('Employee')
+    
+    Employee.find()
+    .then(data => {
+        res.json(data)
+    })
+})
+
+createProfile.post('/', (req, res) => {
+    console.log(req.body)
     Joi.validate({
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -33,6 +43,7 @@ createProfile.post('/', (req, res) => {
             res.send(err)
         } else{
             const Employee = mongoose.model('Employee')
+            
             Employee.update(
                 {_id: req.user._id},
                 { $set:

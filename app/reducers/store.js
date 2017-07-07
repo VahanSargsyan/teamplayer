@@ -1,11 +1,14 @@
 import { combineReducers, createStore, applyMiddleware, compose } from 'redux';
 import thunk from 'redux-thunk';
 import training from './training.reducer';
+
 import auth from './auth.reducer'
 import flashMessage from './flashMessage.reducer'
+import grid from './gridReducer'
 
 const reducers = combineReducers({
-	training, auth, flashMessage
+	training, auth, flashMessage, grid
+
 });
 
 const store = createStore(

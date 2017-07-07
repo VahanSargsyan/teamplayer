@@ -6,9 +6,13 @@ import injectTapEventPlugin from 'react-tap-event-plugin';
 import store from './reducers/store';
 import Layout from './components/Layout';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
+import 'bulma/bulma.sass'
 import './styles/style.sass';
 
+
 window.FETCH_URL = '';
+
+
 
 const App = () => {
     injectTapEventPlugin();
