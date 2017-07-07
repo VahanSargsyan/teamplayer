@@ -12,7 +12,6 @@ const Joi = require('joi');
 require('./models/index').initialize();
 require('dotenv').config();
 require('./passport');
-const api = require('./api');
 
 mongoose.Promise = Promise;
 mongoose.connect(process.env.MONGODB);
@@ -57,6 +56,7 @@ app.get('/logout', (req, res) => {
 	res.redirect('/')
 })
 
+const api = require('./api');
 app.use('/api', api);
 
 app.get('/*', (req, res) => {

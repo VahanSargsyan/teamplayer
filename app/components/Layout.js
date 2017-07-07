@@ -31,7 +31,6 @@ class Layout extends PureComponent {
     }
     render() {
         return (
-
             <div>
                 {this.renderHeader()}
                 <Switch>
@@ -44,7 +43,6 @@ class Layout extends PureComponent {
                     <Route component={ErrorPage}/>
                 </Switch>
             </div>
-
         );
     }
 }

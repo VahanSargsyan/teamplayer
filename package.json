@@ -9,7 +9,6 @@
     "server": "nodemon backend/server.js",
     "frontend": "webpack-dev-server",
     "watch": "webpack --watch"
-
   },
   "engines": {
     "node": "8.1.2"
