@@ -8,7 +8,6 @@ module.exports = function() {
     const Employee = new Schema({
         googleId: String,
         email: String,
-        token: String,
         firstName: String,
         lastName: String,
         gender: String,
