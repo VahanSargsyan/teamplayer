@@ -8,3 +8,4 @@ db/*
 .env
 *.css
 bundle.js
+.history/

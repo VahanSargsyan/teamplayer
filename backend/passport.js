@@ -36,7 +36,8 @@ passport.use(new GoogleStrategy({
 				token: accessToken,
 				firstName: profile.name.givenName,
 				lastName: profile.name.familyName,
-				email: profile.emails[0].value
+				email: profile.emails[0].value,
+				picture: profile.photos[0].value.substring(0, profile.photos[0].value.indexOf('?sz='))
 			});
 			user.save()
 				.then(() => done(null, user))

@@ -13,7 +13,8 @@ const mapStateToProps = (state) => {
     return {
         employees: state.training.employees,
         trainingStep: state.training.trainingStep,
-        renderMsg: state.training.renderMsg
+        renderMsg: state.training.renderMsg,
+        finished: state.training.finished
     }
 }
 
@@ -37,35 +38,47 @@ class Training extends Component {
     componentDidMount() {
         this.props.getTrainingData()
     }
-    changeTrainingStep = (value, fn) => {
+    finishSteps = () => {
+        this.props.changeTrainingStep(null, 'finished', this.props.finished, ()=>{
+            this.props.history.push('team')
+        })
+    }
+    changeTrainingStep = (value) => {
         const nextStepIndex = this.props.trainingStep + value
         const nextStepId = this.props.employees[nextStepIndex]['_id']
-        this.props.changeTrainingStep(nextStepIndex, nextStepId, ()=>{
+        const finished = this.props.finished
+        this.props.changeTrainingStep(nextStepIndex, nextStepId, finished, ()=>{
             this.setState({
                 renderTyping: false
-            }, () => this.setState({renderTyping: true}))
+            }, () => {
+                if(value > 0) {
+                    this.setState({renderTyping: true})
+                }
+            })
         })
 
     }
 
     renderBackButton = () => {
-        if (this.props.trainingStep != 0) {
-            return <RaisedButton label="Back" primary={true} className='button'
-                onTouchTap={this.decreaseStep}/>
-        }
+		const isDisabled = this.props.trainingStep == 0;
+		return (<RaisedButton
+			label='Back'
+			primary
+			className='training-button'
+			disabled={isDisabled}
+			onTouchTap={this.decreaseStep}
+		/>);
     }
     renderNextButton = () => {
-
-        if (this.props.trainingStep === this.props.employees.length - 1) {
-
-            return <RaisedButton label="Finish" primary={true} className='button'
-                 containerElement={<Link to="/team" />} />
-
-
-        } else {
-            return <RaisedButton label="Next" primary={true} className='button'
-                onTouchTap={this.increaseStep}/>
-        }
+		const last = this.props.trainingStep === this.props.employees.length - 1
+		const onClick = last ? this.finishSteps : this.increaseStep;
+		const label = last ? 'Finish' : 'Next';
+		return (<RaisedButton
+			label={label}
+			primary
+			className='training-button'
+            onTouchTap={onClick}
+		/>);
     }
     delayGen(mean, std, {line, lineIdx, charIdx, defDelayGenerator}) {
         if (lineIdx === 3 && charIdx === line.length - 1) {
@@ -80,38 +93,68 @@ class Training extends Component {
         return defDelayGenerator(mean + 25);
     }
 
-
+    renderEmployeeInfo = () => {
+        return (
+            <div className='typistText'>
+                <p>{employee.firstName} {employee.lastName}</p>
+                <p> {employee.position}</p>
+                <p>{employee.jobDescription}</p>
+                {employee.hobbies.length > 0 &&(
+                    <p>Hobbies: {employee.hobbies.map((hobby, i)=>{
+                            return (<span key={hobby._id}>{hobby.label}
+                                {employee.hobbies.length != i + 1 ? ',' :'' } </span>)
+                        })}
+                    </p>)}
+            </div>
+        )
+    }
     render() {
         const {renderTyping} = this.state;
         if (this.props.employees.length > 0) {
             const employee = this.props.employees[this.props.trainingStep]
             return (
-                <div className='trainingContainer'>
-                    <h1>Meet our team members</h1>
-                    <div className='trainingInfo'>
-                        <div className="avatar">
-                            <img src={employee.picture} alt='avatar' className='imployeeImage'/>
-                        </div>
-                        {renderTyping && (
-                            <Typist cursor={{show: false }}  avgTypingSpeed={60}
-                                        delayGenerator={this.delayGen}
-                                        startDelay={500}>
-                                <div className="typistText">
-                                    <p>{employee.firstName} {employee.lastName}</p>
-                                    <p> {employee.position},  {employee.jobDescription}</p>
-                                        <p>Hobbies: {employee.hobbies.map(hobby=>{
-                                            return <span key={hobby._id}>{hobby.label},  </span>
-                                        })}</p>
+                <div className='main-container'>
+                    <div className='avatarDiv'>
+                        <img src={employee.picture} alt='avatar' className='trainingPhoto'/>
+                    </div>
+                    <p className='progress-text'>{this.props.trainingStep + 1} / {this.props.employees.length}</p>
+                        <div className='training-info'>
+                            {renderTyping && !this.props.finished ? (
+                                <Typist cursor={{show: false }}  avgTypingSpeed={80}delayGenerator={this.delayGen} startDelay={500}>
+                                    <div className='typist-text'>
+                                        <p className='name'>{employee.firstName} {employee.lastName}</p>
+                                        <p> {employee.position}</p>
+                                        {employee.jobDescription != '' && (
+                                        <p>{employee.jobDescription}</p>)}
+
+                                        {employee.hobbies && employee.hobbies.length > 0 &&(
+                                            <p>Hobbies - {employee.hobbies.map((hobby, i)=>{
+                                                    return (<span key={hobby._id}>{hobby.label}
+                                                        {employee.hobbies.length != i + 1 ? ',' :'' } </span>)
+                                                })}
+                                            </p>)}
+                                    </div>
+                                </Typist>
+                            ) : (
+                                <div className = 'Typist'>
+                                    <div className='typist-text'>
+                                        <p className='name'>{employee.firstName} {employee.lastName}</p>
+                                        <p> {employee.position}</p>
+                                        <p>{employee.jobDescription}</p>
+                                        {employee.hobbies.length > 0 &&(
+                                            <p>Hobbies - {employee.hobbies.map((hobby, i)=>{
+                                                    return (<span key={hobby._id}>{hobby.label}
+                                                        {employee.hobbies.length != i + 1 ? ',' :'' } </span>)
+                                                })}
+                                            </p>)}
+                                    </div>
                                 </div>
-                            </Typist>
-                        )}
-                    </div>
-                    <div className="buttons">
-                        {this.renderBackButton()}
-                        {this.renderNextButton()}
-                        <LinearProgress mode="determinate" style={{"height": "25px", "margin-top": "40px"}}
-                             value={this.props.trainingStep  * 100 / (this.props.employees.length-1 )} />
-                    </div>
+                            )}
+                        </div>
+                        <div className="buttons">
+                            {this.renderBackButton()}
+                            {this.renderNextButton()}
+                        </div>
                 </div>
             )
         } else {

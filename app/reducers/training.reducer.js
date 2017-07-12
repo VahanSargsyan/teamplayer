@@ -14,6 +14,7 @@ export default(state = initialStep, action) => {
             return {
                 ...state,
                 trainingStep: action.payload.trainingStep,
+                finished: action.payload.finished,
                 employees: action.payload.employees
             }
         case CHANGE_TRAINING_STEP_SUCCESS:

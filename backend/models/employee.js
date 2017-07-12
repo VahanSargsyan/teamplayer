@@ -8,15 +8,23 @@ module.exports = function() {
     const Employee = new Schema({
         googleId: String,
         email: String,
-        token: String,
         firstName: String,
         lastName: String,
+        gender: String,
+        bio: String,
         picture: String,
         position: String,
         jobDescription: String,
+        education: String,
         hobbies: [hobbiesSchema],
         fbLink: String,
-        trainingStep: mongoose.Schema.Types.ObjectId
+        trainingStep: String,
+        gender: String,
+        bio: String,
+        education: String,
+        rightAnswers: Array,
+        quizRezults: Array
+
     });
     mongoose.model("Employee", Employee);
 };

@@ -12,14 +12,14 @@ const config = {
 	},
 	devServer: {
 		inline: true,
-		contentBase: 'public',
+		contentBase: path.join(__dirname, 'backend', 'public'),
 		historyApiFallback: true
 	},
 	devtool: 'inline-source-map',
 	module: {
 		loaders: [
 			{
-				test: /\.js?$/,
+				test: /\.js$/,
 				exclude: /node_modules/,
 				loader: 'babel-loader',
 				query: {
@@ -27,11 +27,12 @@ const config = {
 				}
 			},
 			{
-				test: /\.sass?$/,
+				test: /\.sass$/,
+				include: /(node_modules|app)/,
 				loader: [ 'style-loader', 'css-loader', 'sass-loader' ]
 			},
 			{
-				test: /\.css?$/,
+				test: /\.css$/,
 				loader: [ 'style-loader', 'css-loader' ]
 			}
 		]
