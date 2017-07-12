@@ -16,7 +16,7 @@ const getReqConf = (method, body) => {
 
 export const getApi = ()=>{    
     
-    const reqUrl = "http://localhost:8081/api/createProfile";
+    const reqUrl = `${FETCH_URL}/api/createProfile`;
     const reqConf = getReqConf('GET');
      return fetch(reqUrl, reqConf).then(result => {
         return result.json()
