@@ -25,7 +25,7 @@ class Login extends PureComponent {
     }
     render() {
         return (
-            <div className='container'>
+            <div className='login-container'>
                 {this.renderFlashMessage()}
                 <div className='content'>
                     <h1 className='h1'>

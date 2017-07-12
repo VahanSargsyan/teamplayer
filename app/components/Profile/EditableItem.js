@@ -7,9 +7,25 @@ import './profile.sass';
 import { changeXItemValue, closeEditableItem, updateProfileData } from '../../actions/profile.action';
 
 const styles = {
+    form: {
+        display: 'inline', 
+        padding: 0, 
+        width: '100%',
+        maxWidth: '350px'
+    },
+
     textField: {
-        width: '200px',
-        height: '40px'
+        width: '100%',
+        fontSize: '16px',
+        lineHeight: '21px',
+        minHeight: '40px',
+        height: '100%',
+        fontWeight: 'normal',
+        fontFamily: 'Raleway, sans-serif'
+    }, 
+
+    textArea: {
+        width: '100%',
     }
 }
 
@@ -28,11 +44,10 @@ class EditableItem extends PureComponent {
     render() {
         const { editingValue, mykey, label } = this.props;
         return (
-            <div className='editable'>
-                <label>{ this.props.label }</label>
+            <div style={styles.form}>
                 <ValidatorForm
                     onSubmit={this.submit}
-                    style={{display: 'inline', padding: 0}}
+                    style={styles.form}
                 >
                     <TextValidator
                         name = 'First Name'
@@ -42,6 +57,7 @@ class EditableItem extends PureComponent {
                         validators = {this.props.validators}
                         errorMessages = {this.props.errorMessages}
                         multiLine={this.props.multiLine}
+                        textareaStyle={styles.textArea}
                         style={styles.textField}
                     />
                 </ValidatorForm>

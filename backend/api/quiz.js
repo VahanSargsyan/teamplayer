@@ -80,12 +80,14 @@ quiz.get('/', (req, res) => {
 });
 
 quiz.post('/', (req, res) => {
+    console.log(`aaaaaaaaaaaaaaaa!`)
     const { _id } = req.user; 
     const { answers } = req.body;
     Employee.findById(_id)
         .then(result => {
             const quizRezult = compare(result.rightAnswers, answers);
-            Employee.update({_id}, {$set: {quizRezults: quizRezult} }, {upsert: true});
+            console.log(`quiz result is ---> ${typeof quizRezult}`)
+            Employee.update({_id}, {$set: {quizRezults: [quizRezult]} }, {upsert: true});
             res.send(result.rightAnswers); 
         });
 });

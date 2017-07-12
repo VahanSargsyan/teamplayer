@@ -28,12 +28,13 @@ class Quizes extends PureComponent {
 		if (this.state.correctAnswers.length) {
 			const progress = this.state.progress + 1;
 			this.setState({ progress });
-			if (progress == 10) {
-				this.props.history.push('/grid');
+			if (progress == this.state.quizes.length) {
+				this.props.history.push('/team');
 			}
 		} else {
 			const answers = [...this.state.answers, choice];
-			if (progress == 10) {
+			if (progress == this.state.quizes.length) {
+				this.setState({ answers });
 				this.submitAnswers(answers);
 			} else {
 				this.setState({ answers, progress });
@@ -70,34 +71,32 @@ class Quizes extends PureComponent {
 		if (this.state.loading) {
 			return (
 				<RefreshIndicator
+					style={{position: 'absolute', margin: 'auto'}}
 					size={40}
-					top={100}
-					left={100}
-					status="loading"
+					top={0}
+					left={0}
+					status='loading'
 				/>
 			)
 		}
 		return (
-			<div className='quizHomePage'>
-				<CurrentQuestion
-					question={this.state.quizes[this.state.progress]}
-					addAnswer={this.addAnswer}
-					done={this.state.progress == 9}
-					correctAnswer={giveCorrectAnswers ?
-						this.state.correctAnswers[this.state.progress] :
-						null
-					}
-					selectedAnswer={giveCorrectAnswers ?
-						this.state.answers[this.state.progress] :
-						null
-					}
-				/>
-				<div style={{width: '60%'}}>
-					<LinearProgress
-						mode='determinate'
-						value={(this.state.progress + 1) * 10}
+			<div className='quizHomePage' style={{position: 'relative'}}>
+					<div style={{position: 'absolute',  fontSize: '20px'}}>
+						{this.state.progress + 1}/ {this.state.quizes.length}
+					</div>
+					<CurrentQuestion
+						question={this.state.quizes[this.state.progress]}
+						addAnswer={this.addAnswer}
+						done={this.state.progress == this.state.quizes.length - 1}
+						correctAnswer={giveCorrectAnswers ?
+							this.state.correctAnswers[this.state.progress] :
+							null
+						}
+						selectedAnswer={giveCorrectAnswers ?
+							this.state.answers[this.state.progress] :
+							null
+						}
 					/>
-				</div>
 			</div>
 		);
 	}

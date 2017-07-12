@@ -17,7 +17,6 @@ export function loadEmployee() {
   return function (dispatch) {
     return getApi().then(
       result => {
-          console.log("RESULT,", result);
           dispatch(getEmployee(result));
       },
       error => console.log('The Sandwich Shop', error)

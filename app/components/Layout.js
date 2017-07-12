@@ -2,7 +2,7 @@ import React, {PureComponent} from 'react';
 import {connect} from 'react-redux';
 import {Route, Switch} from 'react-router-dom';
 import { withRouter } from 'react-router';
-import Form from './createProfile/edit.form';
+import CreateProfile from './createProfile/CreateProfile';
 import Login from './Login';
 import Profile from './Profile/Profile';
 import Training from './Training/Training';
@@ -24,7 +24,6 @@ catch (e) {}
 
 class Layout extends PureComponent {
     renderHeader = () => {
-        console.log(this.props)
         if (['/createProfile', '/team', '/profile', '/quiz', '/training'].includes(this.props.location.pathname)) {
             return <Header/>
         }
@@ -35,10 +34,10 @@ class Layout extends PureComponent {
                 {this.renderHeader()}
                 <Switch>
                     <Route exact path='/' component={Guest(Login)}/>
-                    <Route path='/createProfile' component={Auth(Form)}/>
+                    <Route path='/createProfile' component={Auth(CreateProfile)}/>
                     <Route path='/training' component={Auth(Training)}/>
                     <Route path='/profile' component={Auth(Profile)}/>
-                    <Route path='/team' component={Auth(Team)}/>
+                    <Route path='/team' component={Auth(Grid)}/>
                     <Route path='/quiz' component={Auth(Quizes)}/>
                     <Route component={ErrorPage}/>
                 </Switch>

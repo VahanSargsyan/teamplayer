@@ -12,16 +12,19 @@ import { closeEditableItem,
 const styles = {
     groupStyle: {
         display: 'flex',
-        width: 300,
-        margin: 0
+        width: 200,
+        margin: 0,
+        zIndex: 5
     },
 
     radioStyle: {
-        width: 100 
+        width: 100
     },
 
     labelStyle: {
-        fontWeight: 'normal'
+        fontWeight: 'normal',
+        fontFamily: 'Raleway, sans-serif',
+        fontSize: '16px'
     }
 }
 
@@ -35,10 +38,9 @@ class Gender extends PureComponent {
     }
 
     render() {
-        const { label, profile } = this.props;
+        const { profile } = this.props;
         return (
-            <div style={{display: 'flex'}}>
-                <label>{label}:</label>
+            <div style={{display: 'flex', marginBottom: '10px', paddingTop: '10px'}} className='right-column'>
                 <RadioButtonGroup name="gender" 
                                 defaultSelected="male"
                                 valueSelected = {profile.data.gender} 

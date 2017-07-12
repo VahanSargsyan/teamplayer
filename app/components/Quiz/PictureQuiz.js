@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
-import FlatButton from 'material-ui/FlatButton';
+import RaisedButton from 'material-ui/RaisedButton';
 import RightOrWrong from './RightOrWrong';
 
 class PictureQuiz extends PureComponent {
@@ -53,11 +53,10 @@ class PictureQuiz extends PureComponent {
 						/>
 					</div>
 				</div>
-				<div className='button'>
-					<FlatButton
+				<div className='quiz-button'>
+					<RaisedButton
 						disabled={!check && this.state.selected === null}
 						primary
-						style={{marginTop: '20px'}}
 						label={this.props.done ? 'Submit' : 'Next'}
 						onTouchTap={() => this.props.addAnswer(this.state.selected)}
 					/>

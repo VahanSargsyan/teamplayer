@@ -8,69 +8,101 @@ import Image from './Image';
 import './profile.sass';
 
 import { getProfileData,
-        closeEditableItem } from '../../actions/profile.action';
+        updateProfileData,
+        closeEditableItem,
+        postProfileData } from '../../actions/profile.action';
 
 class Profile extends PureComponent {
     componentDidMount() {
         this.props.getProfileData();
     }
 
+    clickOverlay = () => {
+        const {editingItem, editingValue} = this.props.profile;
+
+        if(editingItem && editingItem !== 'hobbies') {
+            this.props.updateProfileData(editingItem, editingValue);
+        } else {
+            this.props.closeEditableItem();
+        }
+    }
+
     render() {
         const { profile } = this.props;
         return (
-            <div>
+            <div className='main-container'>
                 <div className='page-layout'>
-                    <div className='left-side'>
-                        <Image />
+                    <Image />
+                    
+                    <div className={'profile-item'}>
+                        <label className='key'>First name:</label>
+                        <XItem mykey={'firstName'}
+                            validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{1,16}$']}
+                            errorMessages={['This field is required', 'Name can only contain latin letters', 'Name cannot be longer than 16 characters']}
+                        /> 
+                    </div>
+
+                    <div className={'profile-item'}>
+                        <label className='key'>Last name:</label>
+                        <XItem mykey={'lastName'} 
+                            validators={['required', 'matchRegexp:^[a-zA-Z-]+$', 'matchRegexp:^[a-zA-Z-]{1,16}$']}
+                            errorMessages={['This field is required', 'Last Name can only contain latin letters', 'Last name cannot be longer than 16 characters']}
+                        />    
+                    </div>
+
+                    <div className={'profile-item'}>
+                        <label className='key'>Gender:</label>
+                        <Gender mykey={'gender'} /> 
                     </div>
                     
-                    <div className='right-side'>
-
-                        <XItem label={'First name'}
-                            mykey={'firstName'}
-                            validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{1,16}$']}
-                            errorMessages={['This field is required', 'Name can only contain latin letters', 'Name cannot be longer than 16 characters']}/> 
+                    <div className={'profile-item'}>
+                        <label className='key'>Position:</label>    
+                        <XItem mykey={'position'} /> 
+                    </div>
                     
-                        <XItem label={'Last name'}
-                            mykey={'lastName'} 
-                            validators={['required', 'matchRegexp:^[a-zA-Z-]+$', 'matchRegexp:^[a-zA-Z-]{1,16}$']}
-                            errorMessages={['This field is required', 'Last Name can only contain latin letters', 'Last name cannot be longer than 16 characters']}/> 
+                    <div className={'profile-item'}>
+                        <label className='key'>Job description:</label>        
+                        <XItem mykey={'jobDescription'}
+                        /> 
+                    </div>
+                    
+                    <div className={'profile-item'}>
+                        <label className='key'>Education:</label>    
+                        <XItem  mykey={'education'} /> 
+                    </div>
+                    
+                    <div className={'profile-item'}>
+                        <label className='key'>Bio:</label>    
+                        <XItem mykey={'bio'}
+                            multiLine={true} 
+                        /> 
+                    </div>
 
-                        <Gender label={'Gender'}
-                            mykey={'gender'}/> 
-                        
-                        <XItem label={'Position'}
-                            mykey={'position'} /> 
+                    <div className={'profile-item'}>
+                        <label className='key'>Hobbies:</label>
+                        <Hobbies  mykey={'hobbies'} />
+                    </div>
 
-                        <XItem label={'Job Description'}
-                            mykey={'jobDescription'} /> 
+                    <div className={'profile-item'}>
+                        <label className='key'>Facebook link:</label>
+                        <XItem mykey={'fbLink'}
+                            validators={[ 'matchRegexp:^(?:(?:http|https):\/\/)?(?:www.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com\/[a-zA-Z\.0-9]+|me\/[a-zA-Z\.0-9]+)']}
+                            errorMessages={['Wrong Facebook link']} 
+                            
+                        /> 
+                    </div>
 
-                        <XItem label={'Education'}
-                            mykey={'education'} /> 
-
-                        <XItem label={'Bio'}
-                            mykey={'bio'}
-                            multiLine={true} /> 
-                        
-                        <Hobbies label={'Hobbies'}
-                            mykey={'hobbies'}/>
-
-                        <XItem label={'Facebook link'}
-                            mykey={'fbLink'}
-                            validators={[ 'matchRegexp:(?:http://|https://)?(?:www.)?facebook.com\/(?:(?:\w)*#!\/)?(?:pages\/)?(?:[?\w\-]*\/)?(?:profile.php\?id=(?=\d.*))?([\w\-]*)?']}
-                            errorMessages={['Wrong Facebook link']} /> 
-
-                        <div>
-                            <label>Email:</label><span>{ profile.data.email }</span>
-                        </div>
+                    <div className={'profile-item'}>
+                        <label className='key'>Email:</label>
+                        <span className='right-column' style={{paddingTop: '10px'}}>{ profile.data.email }</span>
                     </div>
                 </div>
-                <div onClick={this.props.closeEditableItem.bind(this)} className='overlay'></div>
                 
+                <div onClick={this.clickOverlay} className='overlay'></div>     
             </div>
         );
     }
-}
+} 
 
 const mapStateToProps = (state) => {
     return {
@@ -81,7 +113,9 @@ const mapStateToProps = (state) => {
 const mapDisatchToProps = (dispatch) => {
     return bindActionCreators({
         getProfileData,
-        closeEditableItem
+        updateProfileData,
+        closeEditableItem,
+        postProfileData
     }, dispatch);
 }
 

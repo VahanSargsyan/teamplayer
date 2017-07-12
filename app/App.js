@@ -7,6 +7,7 @@ import store from './reducers/store';
 import Layout from './components/Layout';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import 'bulma/bulma.sass'
+import 'antd/dist/antd.css';
 import './styles/style.sass';
 
 

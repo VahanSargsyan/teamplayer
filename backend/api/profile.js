@@ -7,7 +7,7 @@ const Employee = mongoose.model('Employee');
 const validation = Joi.object().keys({
     firstName: Joi.string().min(2).max(16).regex(/^[a-zA-Z ]+$/),
     lastName: Joi.string().min(2).max(25).regex(/^[a-zA-Z ]+$/),
-    fbLink: Joi.string().regex(/(?:https?:\/\/)?(?:www\.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com|me)\/(?:(?:\w\.)*#!\/)?(?:pages\/)?(?:[\w\-\.]*\/)*([\w\-\.]*)/),
+    fbLink: Joi.string().regex(/(?:(?:http|https):\/\/)?(?:www.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com\/[a-zA-Z\.0-9]+|me\/[a-zA-Z\.0-9]+)/),
     position: Joi.string().min(2).max(16).regex(/^[a-zA-Z ]+$/),
 })
 

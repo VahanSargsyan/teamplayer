@@ -5,38 +5,58 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 
 class Header extends PureComponent {
-    renderProfileNavItem = () => {
-        if (this.props.location.pathname != '/createProfile') {
-            return (
-                <NavItem>
-                    <NavLink to="/profile">Profile</NavLink>
-                </NavItem>
-            )
-        }
-    }
+
     render() {
+		const whiteFont = {color: 'white'};
         return (
-            <Nav>
+            <Nav style={{backgroundColor: '#66d7e6', zIndex: 100}}>
                 <NavGroup align="left">
                     <NavItem>
-                        <NavLink to={`/${this.props.activeUrl}`}>TeamPlayer</NavLink>
+                        <NavLink style={whiteFont} to={`/${this.props.activeUrl}`}>
+							<div style={{display: 'flex', alignItems: 'center'}}>
+								<img src='./favicon.png' />
+								<span style={{margin: 'auto 20px'}}>TeamPlayer</span>
+							</div>
+						</NavLink>
                     </NavItem>
                 </NavGroup>
                 <NavToggle/>
                 <NavGroup align="right" isMenu>
-                    {this.renderProfileNavItem()}
+                    {this.props.activeUrl != 'training'
+                     && this.props.location.pathname != '/createProfile'
+                     && (this.props.location.pathname != '/training'
+                     || this.props.trainingFinished)
+                     && (
+                        <div style={{
+                            display: 'inherit'
+                       }}>
+                            <NavItem>
+                                <NavLink style={whiteFont} to="/quiz">Quiz</NavLink>
+                            </NavItem>
+                            <NavItem>
+                                <NavLink style={whiteFont} to="/training">Training</NavLink>
+                            </NavItem>
+                        </div>
+                    )}
+                    {this.props.location.pathname != '/createProfile' && (
+                        <NavItem>
+                            <NavLink style={whiteFont} to="/profile">Profile</NavLink>
+                        </NavItem>
+                    )}
                     <NavItem>
-                        <MenuLink href="/logout">Logout</MenuLink>
+                        <MenuLink style={whiteFont} href="/logout">Logout</MenuLink>
                     </NavItem>
                 </NavGroup>
             </Nav>
-        );
+        )
     }
+
 }
 
 const mapStateToProps = (state) => {
     return {
-        activeUrl: state.auth.activeUrl
+        activeUrl: state.auth.activeUrl,
+        trainingFinished: state.training.finished
     }
 }
 

@@ -11,12 +11,16 @@ const reducers = combineReducers({
 	training, auth, flashMessage, grid, profile
 });
 
+function compact(...fns) {
+	return fns.filter((fn) => !!fn);
+}
+
 const store = createStore(
     reducers,
-	compose(
+	compose(...compact(
 		applyMiddleware(thunk),
-		window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-	)
+		window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : void(0)
+	))
 
 );
 

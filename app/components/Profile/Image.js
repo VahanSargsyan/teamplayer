@@ -43,7 +43,7 @@ class Image extends PureComponent {
     render() {
         const { profile } = this.props;
         return (
-            <div>
+            <div className={'profile-div'}>
                 <input type="file" 
                     accept = "image/*"
                     name="picture" 
@@ -52,8 +52,8 @@ class Image extends PureComponent {
                     onChange={this.onChange}
                     style={{visibility: 'hidden', position: 'absolute'}}/>
                 
-                <div className='imageWrapper' onClick={this.imageClick}>
-                     <img src={ profile.data.picture }/>
+                <div className='image-wrapper' onClick={this.imageClick}>
+                    <img src={ profile.data.picture } className='profile-img'/>
                 
                     <div className='image-hover'>Click to update</div>
                 </div>

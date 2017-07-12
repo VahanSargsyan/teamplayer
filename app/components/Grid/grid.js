@@ -6,7 +6,8 @@ import Paper from 'material-ui/Paper'
 import {connect } from 'react-redux'
 import {loadEmployee} from '../../actions/GridActions'
 import Dialog from 'material-ui/Dialog';
-
+import FlatButton from 'material-ui/FlatButton';
+import {Modal} from 'antd';
 
 const customContentStyle = {
     width: '35%',
@@ -17,65 +18,54 @@ const customContentStyle = {
 };
 
 class Grid extends PureComponent {
-    
     state = {
-        activeUser: null,
-        modal: false
+        activeUser: null
     }
 
     componentDidMount() {
         this.props.loadEmployee();
     }
 
-    babgen(user){
-       console.log(user)
-        this.setState({
-        
-            modal: true,
-            activeUser: user
-        }, () => {
-            console.log('state', this.state)
-            
-        })
-
-        
+    activateUser(activeUser){ 
+        this.setState({ activeUser });
+    }
+    handleRedirect = (e) => {
+        e.stopPropagation()
     }
 
-      handleClose = () => {
-    this.setState({activeUser:null});
-  };
-
     render(){
-
-        if (!this.props.users) {
-            return (<div>There are no user...</div>)
-        }
-
         return(          
-            <div>
-                <div className='columns is-multiline '>
+            <div>		
+                <div className='UnderHeader columns is-multiline'>
                 {this.props.users.map((user, i) => 
-                    <div key={i} className='gridContainer column  is-one-quarter-desktop is-one-third-tablet is-half-mobile  '>
-                        <div className='ImageCountainer'>
-                            <img className='circularImage' src={user.picture}  onClick={()=> this.babgen(user)} />
-                            <a href={user.fbLink} target="_blank"><img src="https://www.rtic-thai.info/tsquare/wp-content/uploads/2016/06/facebook.png" className='circularFacebook'/></a>
+                    <div key={i} className='Container column is-one-quarter-desktop is-one-third-tablet is-full-mobile'>
+                        <div  className='gridContainer ' onClick={()=> this.activateUser(user)}>
+                            <div className='ImageCountainer'>
+                                <img className='circularImage' src={user.picture}  />
+                                {user.fbLink ? 
+                                <a onClick={this.handleRedirect} href={user.fbLink} target="_blank"><img src="https://www.rtic-thai.info/tsquare/wp-content/uploads/2016/06/facebook.png" className='circularFacebook'/></a>
+                                :null
+                                }
+                            </div>
+                            <div className='name'><b>{`${user.firstName} ${user.lastName}`}</b></div>
+                            <div className='position'>{user.position}</div>
                         </div>
-                        <div className='name'><b>{`${user.firstName} ${user.lastName}`}</b></div>
-                        <div className='position'>{user.position}</div>
                     </div>)}
-                
                 </div>
                 {
                     this.state.activeUser ?
-                    <Dialog
-                        title="Dialog With Actions"
-                        modal={false}
-                        contentStyle={customContentStyle}
-                        open={this.state.modal}
-                        onRequestClose={this.handleClose}
-                        autoScrollBodyContent={true}>
+                    
+                    <Modal
+                        
+                        visible={this.state.activeUser !== null}
+                        wrapClassName="vertical-center-modal"
+                        onOk={() => this.activateUser(null)}
+                        onCancel={() => this.activateUser(null)}
+                        autoScrollBodyContent={true}
+                        footer={null}          
+                        okText='ok'>
                         <div className='modalContainer'>
-                            <div className='ImageModalCountainer' onClick={()=> this.babgen(this.state.activeUser)}>
+                            <div className='ImageModalCountainer' onClick={()=> this.activateUser(this.state.activeUser)}>
                                 <img className='circularModalImage' src={this.state.activeUser.picture} />
                             </div>
                             <div className='nameModal'>
@@ -84,7 +74,6 @@ class Grid extends PureComponent {
                                 </b>
                                 <br/>{this.state.activeUser.position}
                                 <br/>{this.state.activeUser.email}
-
                             </div>
                         </div>
                         <div className='Hobbies'>
@@ -98,32 +87,23 @@ class Grid extends PureComponent {
                         <div className='Education'>
                             <b>Education</b>
                             <div className='EduInfo'>
-                                BS in American University of Armenia
-
+                                {this.state.activeUser.education}
                             </div>
                         </div>
                         <div className='JobDescription'>
                             <b>Job Description</b>
                             <div className='DescribeJob'>
-                                It is very interesting to work in Simply Technologies and I am very happy tobtbtbtbtbtbtbtbtbtbbtbtbtbtbtbtbtbbtbt
-                                btbtbtbtbtbbtbtbtbbtajfaalsjf;lkdl;dkf;dlkl
-                                ajf;ladkdlfjl;kf
-
+                                {this.state.activeUser.jobDescription}
                             </div>
                         </div>
-                        
-
-                        
-                    </Dialog> :
+                    </Modal> :
                     null
                 }
-            </div>
-            
+            </div>         
         )
     }
-
-    
 }
+
 function mapStateToProps(state){
     return {
         users: state.grid.users,
@@ -136,6 +116,5 @@ function mapDispatchToProps(dispatch){
         loadEmployee: () => dispatch(loadEmployee())
     }
 }
-
 
 export default connect(mapStateToProps, mapDispatchToProps)(Grid);

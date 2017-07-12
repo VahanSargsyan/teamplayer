@@ -3,9 +3,14 @@ import {connect} from 'react-redux';
 import { bindActionCreators } from 'redux';
 import Chip from 'material-ui/Chip';
 import { ValidatorForm, TextValidator} from 'react-material-ui-form-validator';
+import { lightBlue300 } from 'material-ui/styles/colors';
 import './profile.sass';
 
-import { updateProfileData, postProfileData } from '../../actions/profile.action';
+import { updateProfileData, 
+        postProfileData, 
+        closeEditableItem,
+        clickXItem,
+        changeXItemValue } from '../../actions/profile.action';
 
 const styles = {
     chip: {
@@ -20,31 +25,31 @@ const styles = {
 class Hobbies extends PureComponent {
     constructor(props) {
         super(props);
-        this.state = {mode: 'view', editingValue: ''};
     }
 
     edit = () => {
-        this.setState({mode: 'edit'});
+        this.props.clickXItem(this.props.mykey, '');
     }
 
     handleChange = (e) => {
         if (e.key === 'Enter') {
             this.submit();
         } else {
-            this.setState({editingValue: e.target.value});    
+            this.props.changeXItemValue(this.props.mykey, e.target.value)
         }
     }
 
     submit = () => {
-        const list = this.props.data.hobbies.reduce((accumulator, hobby) => {
-            return [...accumulator, {label: hobby.label}];
-        }, []);
+        if(this.props.editingValue.trim() != '') {
+            const list = this.props.data.hobbies.reduce((accumulator, hobby) => {
+                return [...accumulator, {label: hobby.label}];
+            }, []);
 
-        const newList = {hobbies: [...list, {label: this.state.editingValue}]};
-        
-        this.props.postProfileData(newList);
-        
-        this.setState({mode: 'view', editingValue: ''});
+            const newList = {hobbies: [...list, {label: this.props.editingValue}]};
+            
+            this.props.postProfileData(newList);
+        }
+        this.props.closeEditableItem();
     }
 
     handleRequestDelete = (_id) => {
@@ -60,31 +65,33 @@ class Hobbies extends PureComponent {
     }
 
     render() {
-        const { data, editingValue, mykey } = this.props;
+        const { data, editingItem, editingValue, mykey } = this.props;
         return (
-            <div style={styles.wrapper} className='editable'>
-                <label>{ this.props.label }:</label>
+            <div style={styles.wrapper} className='editable right-column'>
                 { data.hobbies.length > 0 ? 
                     (  
                         data.hobbies.map((hobby) => <Chip 
-                        key={hobby._id} 
-                        style={styles.chip}
-                        onRequestDelete={() => this.handleRequestDelete(hobby._id)}>{hobby.label}</Chip>) 
+                            key={hobby._id} 
+                            style={styles.chip}
+                            backgroundColor={lightBlue300}
+                            labelStyle={{color: '#FFF', paddingTop: 0}}
+                            onRequestDelete={() => this.handleRequestDelete(hobby._id)}>{hobby.label}</Chip>) 
                     ) :  (null) 
                 }
 
                 {
-                    this.state.mode == 'edit' ?
+                    editingItem ==  mykey ?
                     (
-                        <div>
+                        <div style={{display: 'block'}}>
                             <ValidatorForm
                                 onSubmit={this.submit}
-                                style={{display: 'inline', padding: 0}}
+                                style={{display: 'inline', padding: 0}} 
                             >
                                 <TextValidator
                                     name = 'First Name'
-                                    onChange = {this.handleChange}
-                                    value = {this.state.editingValue}
+                                    onChange = {this.handleChange} 
+                                    value = {editingValue}
+                                    style={{height: '40px'}}
                                 />
                             </ValidatorForm>
             
@@ -100,12 +107,16 @@ class Hobbies extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         data: state.profile.data,
-        editingValue: state.profile.editingValue
+        editingValue: state.profile.editingValue,
+        editingItem: state.profile.editingItem
     }
 }
 
 const mapDisatchToProps = (dispatch) => {
     return bindActionCreators({
+        clickXItem,
+        changeXItemValue,
+        closeEditableItem,
         updateProfileData,
         postProfileData
     }, dispatch);

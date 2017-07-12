@@ -21,7 +21,11 @@ export default(Component) => {
                     this.props.history.replace('createProfile')
                 } else if (this.props.activeUrl === 'training' && this.props.match.path != '/training' && this.props.match.path != '/profile') {
                     this.props.history.replace('training')
-                } else if (this.props.activeUrl === 'team' && this.props.match.path != '/team' && this.props.match.path != '/quiz' &&  this.props.match.path != '/profile') {
+                } else if (this.props.activeUrl === 'team'
+                    && this.props.match.path != '/team' 
+                    && this.props.match.path != '/training'
+                    && this.props.match.path != '/quiz'
+                    &&  this.props.match.path != '/profile') {
                     this.props.history.replace('team')
                 }
             })

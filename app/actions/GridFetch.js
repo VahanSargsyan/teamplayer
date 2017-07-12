@@ -18,7 +18,6 @@ export const getApi = ()=>{
     
     const reqUrl = "http://localhost:8081/api/createProfile";
     const reqConf = getReqConf('GET');
-    console.log('did mount')
      return fetch(reqUrl, reqConf).then(result => {
         return result.json()
         }) 
