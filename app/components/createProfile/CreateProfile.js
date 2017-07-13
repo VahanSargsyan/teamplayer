@@ -111,7 +111,6 @@ class CreateProfile extends PureComponent {
 						validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
 						errorMessages={['This field is required', 'Name can contain only latin letters', 'Name must be between 2 and 16 characters']}
 					/>
-
 					<TextValidator
 						style={styles.textfield}
 						name='lastName'
@@ -122,7 +121,6 @@ class CreateProfile extends PureComponent {
 						errorMessages={['This field is required', 'Last Name can contain only latin letters', 'Last Name must be between 2 and 16 characters']}
 					/>
 					<br />
-
 					<TextValidator
 						style={styles.textfield}
 						name = 'position'
@@ -132,7 +130,6 @@ class CreateProfile extends PureComponent {
 						validators={['required', 'matchRegexp:^[a-zA-Z ]+$', 'matchRegexp:^[a-zA-Z ]{2,16}$']}
 						errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}
 					/>
-
 					<TextValidator
 						style={styles.textfield}
 						name = 'fbLink'
@@ -142,7 +139,7 @@ class CreateProfile extends PureComponent {
 						validators={[ 'matchRegexp:^(?:(?:http|https):\/\/)?(?:www.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com\/[a-zA-Z\.0-9]+|me\/[a-zA-Z\.0-9]+)']}
 						errorMessages={['Wrong Facebook link']}
 					/>
-
+					<br />
 					<TextField
 						style={{...styles.textfield, ...styles.radioButtonGroup}}
 						name = 'education'
@@ -172,8 +169,6 @@ class CreateProfile extends PureComponent {
 							/>
 						</RadioButtonGroup>
 					</div>
-
-
 					<TextField
 						style={styles.hobby}
 						name = 'currentHobby'

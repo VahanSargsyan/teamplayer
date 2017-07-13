@@ -23,7 +23,7 @@ module.exports = function() {
         bio: String,
         education: String,
         rightAnswers: Array,
-        quizRezults: Array
+        quizResults: Number
 
     });
     mongoose.model("Employee", Employee);
