@@ -29,7 +29,7 @@ class Header extends PureComponent {
                      && (
                         <div style={{
                             display: 'inherit'
-                       }}>
+                        }}>
                             <NavItem>
                                 <NavLink style={whiteFont} to="/quiz">Quiz</NavLink>
                             </NavItem>

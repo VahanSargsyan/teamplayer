@@ -41,9 +41,18 @@ const getQuiz = (user, index, result, rightAnswers) => {
     if(allQuestions.length) {
         let newQuizes;
         if (allQuestions[randIndex].type === 'tag') {
-            rightAnswers.push(1234);
+            let answer = 0
+            const names =  allQuestions[randIndex].answers;
+            const newAnswers = [...allQuestions[randIndex].answers];
+            shuffle(newAnswers);
+            for (let i = 0; i < names.length; i++) {
+                answer = 10 * answer + (newAnswers.indexOf(names[i]) + 1)
+            }
             newQuizes = allQuestions[randIndex];
-            allQuestions.splice(randIndex, 1);
+            newQuizes.answers = newAnswers
+            rightAnswers.push(answer);
+            console.log('new answers is -->', newAnswers, ' right answer is --->', answer)
+            // allQuestions.splice(randIndex, 1);
         } else {
             rightAnswers.push(allQuestions[randIndex].rightAnswer);
             newQuizes = allQuestions[randIndex];
@@ -64,7 +73,7 @@ const nameQuizGenerator = (user, index, users, rightAnswers) => {
     let i = 0;
     let j;
     while (i < 3) {
-        j = getRandom(users.length )
+        j = getRandom(users.length - 1)
         if (!allrediInAsk.includes(j)) {
             allrediInAsk.push(j);
             answers.push(users[j].firstName);
@@ -82,7 +91,7 @@ const nameQuizGenerator = (user, index, users, rightAnswers) => {
     let i = 0;
     let j;
     while (i < 3) {
-        j = getRandom(users.length )
+        j = getRandom(users.length - 1)
         if (!allrediInAsk.includes(j)) {
             allrediInAsk.push(j);
             answers.push(users[j].picture);
@@ -103,12 +112,12 @@ const compare = (arr1, arr2) => {
             result++
         }
     }
-    return 100 * (result / arr1.length);  
+    return result;  
 }
 
 quiz.get('/', (req, res) => {
     const rightAnswers = [];
-    const _id = "5966093afe434c19842171e9"// req.user; 
+    const { _id } = req.user; 
     const filter = {_id: {$ne: _id}};
 
     Employee.find({_id: {$ne: _id}})
@@ -143,8 +152,8 @@ quiz.post('/', (req, res) => {
     const { answers } = req.body;
     Employee.findById(_id)
         .then(result => {
-            const quizResult = compare(result.rightAnswers, answers);
-            Employee.update({_id}, {$set: {quizResults} }, {upsert: true});
+            const quizRezult = compare(result.rightAnswers, answers);
+            Employee.update({_id}, {$set: {quizRezults: [quizRezult]} }, {upsert: true});
             res.send(result.rightAnswers); 
         });
 });
