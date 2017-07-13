@@ -4,6 +4,8 @@ import RefreshIndicator from 'material-ui/RefreshIndicator';
 import FlatButton from 'material-ui/FlatButton';
 import NameQuiz from './NameQuiz';
 import PictureQuiz from './PictureQuiz';
+import CustomQuiz from './CustomQuiz';
+import TagQuiz from './TagQuiz';
 import './quiz.sass';
 
 class Quizes extends PureComponent {
@@ -66,6 +68,10 @@ class Quizes extends PureComponent {
 					return <PictureQuiz {...props} />
 				case 'name':
 					return <NameQuiz {...props} />
+				case 'tag':
+					return <TagQuiz {...props} />
+				case 'custom':
+					return <CustomQuiz {...props} />
 			}
 		}
 		if (this.state.loading) {
@@ -82,7 +88,7 @@ class Quizes extends PureComponent {
 		return (
 			<div className='quizHomePage' style={{position: 'relative'}}>
 					<div style={{position: 'absolute',  fontSize: '20px'}}>
-						{this.state.progress + 1}/ {this.state.quizes.length}
+						{this.state.progress + 1} / {this.state.quizes.length}
 					</div>
 					<CurrentQuestion
 						question={this.state.quizes[this.state.progress]}

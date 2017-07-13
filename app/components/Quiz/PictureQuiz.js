@@ -42,7 +42,7 @@ class PictureQuiz extends PureComponent {
 					</h1>
 					<RightOrWrong check={check} wasCorrect={wasCorrect} />
 					<div className='image'>
-						<img className='pic-img' src={this.props.question.who} />
+						<img className='pic-img' src={this.props.question.who.picture} />
 					</div>
 					<div className='options'>
 						<RadioButtonGroup
