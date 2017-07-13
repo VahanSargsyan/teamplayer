@@ -15,7 +15,7 @@ const tag = {
         picture: 'http://idolwow.com/wp-content/uploads/2015/07/btob-hang-with-arnie-at-terminator-premiere-pics-20150703.jpg'
         
     },
-    answers: ['psqo', 'msqo', 'tajat', 'krjat']
+    answers: ['1. psqo', '2. msqo', '3. tajat', '4. krjat']
 }
 const questions = [custom, tag];
 /////////////////////////////////dummy data end 
@@ -48,11 +48,10 @@ const getQuiz = (user, index, result, rightAnswers) => {
             for (let i = 0; i < names.length; i++) {
                 answer = 10 * answer + (newAnswers.indexOf(names[i]) + 1)
             }
-            newQuizes = allQuestions[randIndex];
+            newQuizes = Object.assign({}, allQuestions[randIndex]);
             newQuizes.answers = newAnswers
             rightAnswers.push(answer);
-            console.log('new answers is -->', newAnswers, ' right answer is --->', answer)
-            // allQuestions.splice(randIndex, 1);
+            allQuestions.splice(randIndex, 1);
         } else {
             rightAnswers.push(allQuestions[randIndex].rightAnswer);
             newQuizes = allQuestions[randIndex];
@@ -139,7 +138,6 @@ quiz.get('/', (req, res) => {
                     return getQuiz(user, index, result, rightAnswers);
                 }
             });
-
             res.send(newResult);
         })
         .then(() => Employee.update({_id}, {$set: { rightAnswers }}, {upsert: true}))

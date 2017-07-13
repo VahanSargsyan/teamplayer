@@ -40,7 +40,7 @@ class TagQuiz extends PureComponent {
 		if (this.props.correctAnswer != null) {
 			const correctAnswersArray = this._toArray(this.props.correctAnswer);
 			const list = correctAnswersArray.map(digit => {
-				return this.props.question.answers[digit];
+				return this.props.question.answers[digit - 1];
 			});
 			this.setState({ list });
 		}

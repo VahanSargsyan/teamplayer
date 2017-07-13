@@ -23,7 +23,9 @@ class Quizes extends PureComponent {
 		const options = { method: 'get', credentials: 'include' };
 		fetch(`${FETCH_URL}/api/quiz`, options)
 			.then(quizesData => quizesData.json())
-			.then(quizes => this.setState({ loading: false, quizes }));
+			.then(quizes => {
+				this.setState({ loading: false, quizes })
+			});
 	}
 	addAnswer = (choice) => {
 		const progress = this.state.progress + 1;
@@ -54,11 +56,13 @@ class Quizes extends PureComponent {
 		};
 		fetch(`${FETCH_URL}/api/quiz`, options)
 			.then(correctAnswersData => correctAnswersData.json())
-			.then(correctAnswers => this.setState({
-				loading: false,
-				progress: 0,
-				correctAnswers
-			}));
+			.then(correctAnswers => {
+				this.setState({
+					loading: false,
+					progress: 0,
+					correctAnswers
+				})
+			});
 	}
 	render() {
 		const giveCorrectAnswers = !!this.state.correctAnswers.length;
