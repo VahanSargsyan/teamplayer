@@ -5,7 +5,15 @@ import {connect} from 'react-redux'
 import {NavLink} from 'react-router-dom'
 
 class Header extends PureComponent {
-
+    renderAdminPanel = () => {
+         if(this.props.admin) {
+             return (
+                 <NavItem>
+                     <NavLink  style={{color: 'white'}} to="/createQuestion">Admin</NavLink>
+                 </NavItem>
+             )
+        }
+    }
     render() {
 		const whiteFont = {color: 'white'};
         return (
@@ -22,6 +30,7 @@ class Header extends PureComponent {
                 </NavGroup>
                 <NavToggle/>
                 <NavGroup align="right" isMenu>
+                    {this.renderAdminPanel()}
                     {this.props.activeUrl != 'training'
                      && this.props.location.pathname != '/createProfile'
                      && (this.props.location.pathname != '/training'
@@ -56,7 +65,8 @@ class Header extends PureComponent {
 const mapStateToProps = (state) => {
     return {
         activeUrl: state.auth.activeUrl,
-        trainingFinished: state.training.finished
+        trainingFinished: state.training.finished,
+        admin: state.auth.admin
     }
 }
 
