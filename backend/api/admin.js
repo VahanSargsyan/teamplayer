@@ -18,8 +18,11 @@ adminApi.post('/question', (req, res) => {
         rightAnswer
     }
     var newReq = new adminQuestion(reqObject)
-    return newReq.save()
-     
+    newReq.save()
+    .then(()=> {
+        res.status(200).send()
+    })
+    
 })
 
 module.exports = adminApi;
