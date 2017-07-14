@@ -23,7 +23,7 @@ module.exports = function() {
         bio: String,
         education: String,
         rightAnswers: Array,
-        quizRezults: Number
+        quizResults: Number
     }, {
         toObject: {
             virtuals: true

@@ -3,7 +3,7 @@ import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
 import RaisedButton from 'material-ui/RaisedButton';
 import RightOrWrong from './RightOrWrong';
 
-class NameQuiz extends PureComponent {
+class CustomQuiz extends PureComponent {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -13,38 +13,47 @@ class NameQuiz extends PureComponent {
 	render() {
 		const check = this.props.correctAnswer != null;
 		const wasCorrect = check && this.props.correctAnswer === this.props.selectedAnswer;
-		const renderOptions = this.props.question.answers.map((answerImg, index) => {
-			let style = {};
+		const renderOptions = this.props.question.answers.map((answer, index) => {
+			let labelStyle = {};
 			if (check) {
 				if (this.props.correctAnswer === index) {
-					style = {border: '2px solid green'};
+					labelStyle = {color: 'green'};
 				} else if (this.props.selectedAnswer === index) {
-					style = {border: '2px solid red'};
+					labelStyle = {color: 'red'};
 				}
-			} else {
-				style = this.state.selected === index ? 
-					{border: '2px solid #00bcd4', cursor: 'pointer'} :
-					{cursor: 'pointer'}
 			}
-			return <img
-						key={index}
-						className='name-img'
-						src={answerImg}
-						style={{...style, marginTop: '40px'}}
-						onTouchTap={check ? null : () => this.setState({ selected: index })}
-					/>
-		});
+			return (
+				<RadioButton
+					disabled={check}
+					key={index}
+					value={index}
+					label={answer}
+					style={{margin: '10px 0'}}
+					labelStyle={labelStyle}
+				/>
+		)});
+		const renderPicture = () => this.props.question.who.picture ? (
+				<div className='image'>
+					<img className='pic-img' src={this.props.question.who.picture} />
+				</div>
+			) : null;
 		return (
 			<div className='quiz'>
 				<div className='answers'>
 					<h1
 						style={{textAlign: 'center'}}
 					>
-						Select {this.props.question.who.text} from the pictures
+						{this.props.question.who.text}
 					</h1>
 					<RightOrWrong check={check} wasCorrect={wasCorrect} />
-					<div className='name-options'>
-						{renderOptions}
+					{renderPicture()}
+					<div className='options'>
+						<RadioButtonGroup
+							onChange={(e, selected) => this.setState({ selected })}
+							valueSelected={this.state.selected}
+							name='answers'
+							children={renderOptions}
+						/>
 					</div>
 				</div>
 				<div className='quiz-button'>
@@ -60,4 +69,4 @@ class NameQuiz extends PureComponent {
 	}
 }
 
-export default NameQuiz;
+export default CustomQuiz;
