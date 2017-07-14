@@ -7,6 +7,24 @@ import styles from '../styles/header.sass'
 
 class Header extends PureComponent {
 
+    state = {
+        toggleIsOpen: false
+    }
+
+    componentDidMount() {
+        document.addEventListener('click', this.handleClickOutside, true);
+    }
+
+    componentWillUnmount() {
+        document.removeEventListener('click', this.handleClickOutside, true);
+    }
+
+    handleClickOutside = (event)=> {
+        if(this.refs.menu && !this.refs.menu.contains(event.target) && !this.refs.navToggle.contains(event.target)) {
+            this.handleToggle()
+        }
+    }
+
     renderAdminPanel = () => {
          if(this.props.admin) {
              return (
@@ -17,13 +35,11 @@ class Header extends PureComponent {
         }
     }
 
-    handleToggle = () => {
-        this.props.handleToggle()
+    handleToggle = (event) => {
+        this.setState({toggleIsOpen: !this.state.toggleIsOpen})
     }
 
-    closeNavToggle = () => {
-        console.log("Dsdsdsds")
-    }
+
     render() {
 		const whiteFont = {color: 'white'};
         const renderQuizAndTraining = this.props.activeUrl != 'training'
@@ -43,10 +59,13 @@ class Header extends PureComponent {
 						</NavLink>
                     </NavItem>
                 </NavGroup>
-                <NavToggle onClick={this.handleToggle} isActive={this.props.toggleIsOpen}/>
+                <div ref = 'navToggle' >
+                    <NavToggle onClick={this.handleToggle} isActive={this.state.toggleIsOpen}/>
+                </div>
+
                 {
-                    this.props.toggleIsOpen ?
-                        <div className="menu">
+                    this.state.toggleIsOpen ?
+                        <div className="menu" ref='menu'>
                             <ul>
                                 {renderQuizAndTraining && (
                                     <div>
