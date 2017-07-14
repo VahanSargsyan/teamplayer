@@ -25,14 +25,26 @@ try {
 catch (e) {}
 
 class Layout extends PureComponent {
+
+    state = {
+        toggleIsOpen: false
+    }
+    handleToggle = () => {
+        this.setState({toggleIsOpen: !this.state.toggleIsOpen})
+    }
     renderHeader = () => {
+
         if (['/createProfile', '/team', '/profile', '/quiz', '/training',  '/createQuestion'].includes(this.props.location.pathname)) {
-            return <Header/>
+            return (
+                <div>
+                    <Header toggleIsOpen={this.state.toggleIsOpen} handleToggle={this.handleToggle}/>
+                </div>
+            )
         }
     }
     render() {
         return (
-            <div>
+            <div className='overlay' onClick={this.handleToggle}>
                 {this.renderHeader()}
                 <Switch>
                     <Route exact path='/' component={Guest(Login)}/>
