@@ -33,6 +33,19 @@ class Grid extends PureComponent {
         e.stopPropagation()
     }
 
+    percentColor = (percent) => {
+        switch(true){
+            case (percent >= 80 && percent <= 100):
+                return 'green'
+            case (percent >= 60 && percent < 80):
+                return 'yellow'
+            case (percent >= 40 && percent < 60):
+                return 'orange'
+            case (percent < 40):
+                return 'red'
+        }
+    }
+
     render(){
         return(          
             <div>		
@@ -40,6 +53,10 @@ class Grid extends PureComponent {
                 {this.props.users.map((user, i) => 
                     <div key={i} className='Container column is-one-quarter-desktop is-one-third-tablet is-full-mobile'>
                         <div  className='gridContainer ' onClick={()=> this.activateUser(user)}>
+                            {user.quizResults ?
+                              <div className='percent' style={{color: this.percentColor(user.quizResults)}}>{`${user.quizResults}%`}</div>
+                            : <div className='percent'>{`no result`}</div>
+                            }
                             <div className='ImageCountainer'>
                                 <img className='circularImage' src={user.picture}  />
                                 {user.fbLink ? 

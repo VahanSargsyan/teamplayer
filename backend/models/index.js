@@ -1,4 +1,4 @@
-var models = ['./employee.js'];
+var models = ['./employee.js', './adminQuestions.js'];
 
 exports.initialize = function() {
     var l = models.length;
