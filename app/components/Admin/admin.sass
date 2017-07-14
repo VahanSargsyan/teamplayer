@@ -10,9 +10,10 @@
             flex: 2
             .canvas-block
                 position: relative
-                cursor: crosshair
                 width: 600px
                 height: 300px
+                .file-upload
+                    display: none
                 canvas
                     position: absolute
                     top: 0
@@ -21,3 +22,20 @@
                     z-index: 5
                 .tag-canvas
                     z-index: 10
+        .right-part
+            .count
+                text-align: center
+                position: absolute
+                bottom: 14px
+                left: -27px
+                color: white
+                background: black
+                width: 20px
+                height: 20px
+            .delete
+                cursor: pointer
+                flex: 1
+                margin-top: 33px
+            .submit-btn
+                margin-top: 41px
+                float: right

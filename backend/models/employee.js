@@ -24,7 +24,18 @@ module.exports = function() {
         education: String,
         rightAnswers: Array,
         quizRezults: Array
-
+    }, {
+        toObject: {
+            virtuals: true
+        },
+        toJSON: {
+            virtuals: true
+        }
     });
+    Employee
+        .virtual('name')
+        .get(function(){
+            return `${this.firstName} ${this.lastName}`
+        })
     mongoose.model("Employee", Employee);
 };
