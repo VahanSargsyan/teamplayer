@@ -1,7 +1,7 @@
 import {GET_AUTH_USER_SUCCESS} from '../actions/auth.action'
 import {CHANGE_TRAINING_STEP_SUCCESS} from '../actions/training.action'
 
-const adminEmails = ['anialaverdyan2@gmail.com']
+const adminEmails = ['anialaverdyan2@gmail.com', 'haykhairapetyan@gmail.com']
 
 const initialState = {
     user: null,

@@ -39,7 +39,7 @@ class Layout extends PureComponent {
                     <Route path='/createProfile' component={Auth(CreateProfile)}/>
                     <Route path='/training' component={Auth(Training)}/>
                     <Route path='/profile' component={Auth(Profile)}/>
-                    <Route path='/team' component={Auth(Grid)}/>
+                    <Route path='/team' component={Grid}/>
                     <Route path='/quiz' component={Auth(Quizes)}/>
                     <Route path='/createQuestion' component={createQuestion}/>
                     <Route component={ErrorPage}/>

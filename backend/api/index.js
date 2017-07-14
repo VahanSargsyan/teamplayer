@@ -4,6 +4,7 @@ const api = express.Router();
 
 api
 	.use('/auth', require('./auth'))
+	.use('/admin', require('./admin'))
 	.use('/login', require('./login'))
 	.use('/createProfile', require('./createProfile'))
 	.use('/explore', require('./explore'))
