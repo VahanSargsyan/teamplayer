@@ -78,24 +78,24 @@ class Grid extends PureComponent {
                         </div>
                         {this.state.activeUser.hobbies.length ? <div className='Hobbies'>
                             <b>Hobbies</b>
-                            <div className='HobbyInfo'>
+                            <div className='wrapInfo'>
                                 {this.state.activeUser.hobbies.map((hobby)=>
                                        `${hobby.label} `
                                     )}
                             </div>
                         </div> : null}
-                        <div className='Education'>
+                        {this.state.activeUser.education ? <div className='Education'>
                             <b>Education</b>
-                            <div className='EduInfo'>
+                            <div className='wrapInfo'>
                                 {this.state.activeUser.education}
                             </div>
-                        </div>
-                        <div className='JobDescription'>
+                        </div> : null}
+                        {this.state.activeUser.jobDescription ? <div className='JobDescription'>
                             <b>Job Description</b>
-                            <div className='DescribeJob'>
+                            <div className='wrapInfo'>
                                 {this.state.activeUser.jobDescription}
                             </div>
-                        </div>
+                        </div> : null}
                     </Modal> :
                     null
                 }
