@@ -2,7 +2,6 @@ export const ADD_FLASH_MESSAGE = 'FLASH_MESSAGE/ADD_FLASH_MESSAGE'
 export const DELETE_FLASH_MESSAGE = 'FLASH_MESSAGE/DELETE_FLASH_MESSAGE'
 
 export const addFlashMessage = (text, msgType) => {
-
     return dispatch => {
         dispatch(ADD_FLASH_MESSAGE_SUCCESS(text, msgType))
         setTimeout(()=>{

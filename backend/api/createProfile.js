@@ -2,12 +2,6 @@ const express = require('express');
 const createProfile = express.Router();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
-const fs = require('fs');
-const path = require('path');
-const multer = require('multer');
-const appDir = path.dirname(require.main.filename);
-const upload = multer({ dest: appDir + '/public/uploads' });
-const uuid = require('uuid');
 const Joi = require('joi');
 
 const Employee = mongoose.model('Employee');

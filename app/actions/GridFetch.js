@@ -15,11 +15,10 @@ const getReqConf = (method, body) => {
     }
 
 export const getApi = ()=>{
-
     const reqUrl = `${FETCH_URL}/api/createProfile`;
     const reqConf = getReqConf('GET');
      return fetch(reqUrl, reqConf).then(result => {
         return result.json()
-        })
-
+     })
 }
+
