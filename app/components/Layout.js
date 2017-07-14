@@ -31,7 +31,10 @@ class Layout extends PureComponent {
     }
 
     handleToggle = () => {
-        this.setState({toggleIsOpen: !this.state.toggleIsOpen})
+
+        this.setState({toggleIsOpen: !this.state.toggleIsOpen}, ()=>{
+            console.log("Dsdsdsdsdsds", this.state.toggleIsOpen)
+        })
     }
     renderHeader = () => {
 
@@ -45,7 +48,7 @@ class Layout extends PureComponent {
     }
     render() {
         return (
-            <div className='overlay' onClick={()=>{this.setState({toggleIsOpen: false})}}>
+            <div className='overlay'>
                 {this.renderHeader()}
                 <Switch>
                     <Route exact path='/' component={Guest(Login)}/>
