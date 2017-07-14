@@ -90,7 +90,7 @@ const compare = (arr1, arr2) => {
             result++
         }
     }
-    return result;  
+    return result / arr1.length * 100;  
 }
 
 quiz.get('/', async (req, res) => {
@@ -123,12 +123,13 @@ quiz.get('/', async (req, res) => {
 });
 
 quiz.post('/', (req, res) => {
+    console.log('post');
     const { _id } = req.user; 
     const { answers } = req.body;
     Employee.findById(_id)
         .then(result => {
-            const quizRezult = compare(result.rightAnswers, answers);
-            Employee.update({_id}, {$set: {quizRezults: [quizRezult]} }, {upsert: true});
+            const quizResults = compare(result.rightAnswers, answers);
+            Employee.update({_id}, {$set: {quizResults} }, {upsert: true}).exec();
             res.send(result.rightAnswers); 
         });
 });

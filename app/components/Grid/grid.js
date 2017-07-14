@@ -55,7 +55,7 @@ class Grid extends PureComponent {
                         <div  className='gridContainer ' onClick={()=> this.activateUser(user)}>
                             {user.quizResults ?
                               <div className='percent' style={{color: this.percentColor(user.quizResults)}}>{`${user.quizResults}%`}</div>
-                            : <div className='percent'>{`no result`}</div>
+                            : <div className='percent'>N/A</div>
                             }
                             <div className='ImageCountainer'>
                                 <img className='circularImage' src={user.picture}  />

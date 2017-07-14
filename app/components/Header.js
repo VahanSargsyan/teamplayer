@@ -6,10 +6,6 @@ import {NavLink} from 'react-router-dom'
 import styles from '../styles/header.sass'
 
 class Header extends PureComponent {
-    constructor(props){
-        super(props)
-        this.state = {toggleIsOpen: false}
-    }
 
     renderAdminPanel = () => {
          if(this.props.admin) {
@@ -22,11 +18,19 @@ class Header extends PureComponent {
     }
 
     handleToggle = () => {
-        this.setState({toggleIsOpen: !this.state.toggleIsOpen})
+        this.props.handleToggle()
     }
 
+    closeNavToggle = () => {
+        console.log("Dsdsdsds")
+    }
     render() {
 		const whiteFont = {color: 'white'};
+        const renderQuizAndTraining = this.props.activeUrl != 'training'
+                     && this.props.location.pathname != '/createProfile'
+                     && (this.props.location.pathname != '/training'
+                     || this.props.trainingFinished)
+        const renderProfile = this.props.location.pathname != '/createProfile'
         return (
             <Nav style={{backgroundColor: '#66d7e6', zIndex: 100}}>
                 <NavGroup align="left">
@@ -39,26 +43,30 @@ class Header extends PureComponent {
 						</NavLink>
                     </NavItem>
                 </NavGroup>
-                <NavToggle onClick={this.handleToggle} isActive={this.state.toggleIsOpen}/>
+                <NavToggle onClick={this.handleToggle} isActive={this.props.toggleIsOpen}/>
                 {
-                    this.state.toggleIsOpen ?
+                    this.props.toggleIsOpen ?
                         <div className="menu">
                             <ul>
-                                <NavLink onClick={this.handleToggle} to="/quiz"><li>Quiz</li></NavLink>
-                                <NavLink onClick={this.handleToggle} to="/training"><li>Training</li></NavLink>
-                                <NavLink onClick={this.handleToggle} to="/profile"><li>Profile</li></NavLink>
+                                {renderQuizAndTraining && (
+                                    <div>
+                                        <NavLink onClick={this.handleToggle} to="/quiz"><li>Quiz</li></NavLink>
+                                        <NavLink onClick={this.handleToggle} to="/training"><li>Training</li></NavLink>
+                                    </div>
+                                )}
+                                {renderProfile && (
+                                    <NavLink onClick={this.handleToggle} to="/profile"><li>Profile</li></NavLink>
+                                )}
+
                                 <MenuLink href="/logout"><li>Logout</li></MenuLink>
-                                                               
+
                             </ul>
                         </div>
-                    : null    
-                } 
+                    : null
+                }
                 <NavGroup align="right" isMenu>
                     {this.renderAdminPanel()}
-                    {this.props.activeUrl != 'training'
-                     && this.props.location.pathname != '/createProfile'
-                     && (this.props.location.pathname != '/training'
-                     || this.props.trainingFinished)
+                    {renderQuizAndTraining
                      && (
                         <div style={{
                             display: 'inherit'
@@ -71,7 +79,7 @@ class Header extends PureComponent {
                             </NavItem>
                         </div>
                     )}
-                    {this.props.location.pathname != '/createProfile' && (
+                    {renderProfile && (
                         <NavItem>
                             <NavLink style={whiteFont} to="/profile">Profile</NavLink>
                         </NavItem>

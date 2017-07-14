@@ -6,11 +6,8 @@ const mongoose = require('mongoose')
 const adminQuestion = mongoose.model('adminQuestion');
 
 adminApi.post('/question', (req, res) => {
-    
-    let {type, picture, text, answers, rightAnswer} = req.body
-    if(!text) {
-        text = 'dsfds'
-    }
+
+    const {type, picture, text, answers, rightAnswer} = req.body
     var reqObject = {
         type ,
         who: {
@@ -23,9 +20,9 @@ adminApi.post('/question', (req, res) => {
     var newReq = new adminQuestion(reqObject)
     newReq.save()
     .then(()=> {
-        res.status(200).send()
+        res.status(200).send({success: true})
     })
-    
+
 })
 
 module.exports = adminApi;
