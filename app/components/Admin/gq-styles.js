@@ -1,9 +1,12 @@
 export default {
     container: {
         display: 'flex',
+        border: '1px solid lightgray',
+        padding: '15px',
         flexDirection: 'row',
         maxWidth: '500px',
         width: '100%',
+        marginTop: '15px',
         marginLeft: 'auto',
         marginRight: 'auto'
     },
@@ -27,8 +30,21 @@ export default {
         border: '2px solid lightblue'
     },
 
+    pictureContainer: {
+        position: 'relative', 
+        margin: 'auto', 
+        width: '300px'
+    },
+
     picture: {
-        width: '300px',
+        width: '100%',
+    },
+
+    deletePicture: {
+        width: '18px',
+        position: 'absolute',
+        top: '5px',
+        right: '5px'
     },
 
     answersContainer: {

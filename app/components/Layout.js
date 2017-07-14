@@ -41,7 +41,7 @@ class Layout extends PureComponent {
                     <Route path='/profile' component={Auth(Profile)}/>
                     <Route path='/team' component={Grid}/>
                     <Route path='/quiz' component={Auth(Quizes)}/>
-                    <Route path='/createQuestion' component={createQuestion}/>
+                    <Route path='/createQuestion' component={Admin(createQuestion)}/>
                     <Route component={ErrorPage}/>
                 </Switch>
             </div>
