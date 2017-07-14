@@ -76,14 +76,14 @@ class Grid extends PureComponent {
                                 <br/>{this.state.activeUser.email}
                             </div>
                         </div>
-                        <div className='Hobbies'>
+                        {this.state.activeUser.hobbies.length ? <div className='Hobbies'>
                             <b>Hobbies</b>
                             <div className='HobbyInfo'>
                                 {this.state.activeUser.hobbies.map((hobby)=>
                                        `${hobby.label} `
                                     )}
                             </div>
-                        </div>
+                        </div> : null}
                         <div className='Education'>
                             <b>Education</b>
                             <div className='EduInfo'>
