@@ -75,7 +75,7 @@ class TagQuestion extends PureComponent {
                 body: JSON.stringify(data),
                 credentials: 'include'
             }
-            fetch(`${FETCH_URL}/api/question`, initObj).then(result => result.json()).then(result => {
+            fetch(`${FETCH_URL}/api/admin/question`, initObj).then(result => result.json()).then(result => {
                 this.setState({showSuccess: true})
             }).catch(error => error)
         } else {
