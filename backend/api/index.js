@@ -11,6 +11,7 @@ api
 	.use('/training', require('./training'))
 	.use('/explore', require('./explore'))
 	.use('/profile', require('./profile'))
+	.use('/autocomplete', require('./autocomplete'))
 	.use('/quiz', require('./quiz'));
 
 module.exports = api;

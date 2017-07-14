@@ -11,7 +11,7 @@ class GeneralQuestion extends PureComponent {
         super(props);
         this.state = {
             data: {
-                 type: "custom",
+                type: "custom",
                 picture: '',
                 text: '',
                 answers: ['', '', '', ''],
