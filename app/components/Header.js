@@ -25,8 +25,6 @@ class Header extends PureComponent {
         this.setState({toggleIsOpen: !this.state.toggleIsOpen})
     }
 
-
-
     render() {
 		const whiteFont = {color: 'white'};
         return (
@@ -41,7 +39,6 @@ class Header extends PureComponent {
 						</NavLink>
                     </NavItem>
                 </NavGroup>
-
                 <NavToggle onClick={this.handleToggle} isActive={this.state.toggleIsOpen}/>
                 {
                     this.state.toggleIsOpen ?
