@@ -24,6 +24,7 @@ class Quizes extends PureComponent {
 		fetch(`${FETCH_URL}/api/quiz`, options)
 			.then(quizesData => quizesData.json())
 			.then(quizes => {
+				console.log(quizes)
 				this.setState({ loading: false, quizes })
 			});
 	}

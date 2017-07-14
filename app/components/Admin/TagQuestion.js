@@ -67,7 +67,7 @@ class TagQuestion extends PureComponent {
                 return tag.name
             })
             const picture = this.refs.canvasComponent.getFinalImage()
-            const data = {type: 'tag',who: {picture},answers}
+            const data = {type: 'tag', picture, answers}
             const initObj = {
                 method: "POST",
                 headers: {'Content-Type': 'application/json'},

@@ -7,7 +7,10 @@ const adminQuestion = mongoose.model('adminQuestion');
 
 adminApi.post('/question', (req, res) => {
     
-    const {type, picture, text, answers, rightAnswer} = req.body
+    let {type, picture, text, answers, rightAnswer} = req.body
+    if(!text) {
+        text = 'dsfds'
+    }
     var reqObject = {
         type ,
         who: {

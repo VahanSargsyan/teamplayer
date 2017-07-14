@@ -15,7 +15,7 @@ class GeneralQuestion extends PureComponent {
                 picture: '',
                 text: '',
                 answers: ['', '', '', ''],
-                rightAnswer: ''
+                rightAnswer: 'null'
             },
             success: '',
             error: ''
@@ -23,7 +23,7 @@ class GeneralQuestion extends PureComponent {
     }
 
     submit = () => {
-        if(this.state.data.rightAnswer == '') {
+        if(this.state.data.rightAnswer == 'null') {
            this.setState({error: 'No right answer chosen'});
         } else {
             const url = '/api/admin/question';
@@ -147,10 +147,10 @@ class GeneralQuestion extends PureComponent {
                                 valueSelected = {this.state.data.rightAnswer.toString()} 
                                 onChange={this.handleRightAnswer}
                                 style={styles.radioGroup}>
-                                    <RadioButton value={'1'} name='option1'/>
-                                    <RadioButton value={'2'} name='option2'/>
-                                    <RadioButton value={'3'} name='option3'/>
-                                    <RadioButton value={'4'} name='option4'/>
+                                    <RadioButton value={'0'} name='option1'/>
+                                    <RadioButton value={'1'} name='option2'/>
+                                    <RadioButton value={'2'} name='option3'/>
+                                    <RadioButton value={'3'} name='option4'/>
                             </RadioButtonGroup>
 
                             <div style = { styles.optionsGroup }>
