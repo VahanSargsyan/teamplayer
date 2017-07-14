@@ -83,11 +83,9 @@ class CreateProfile extends PureComponent {
 				return hobby.label === currentHobby
 			})
 			if (index != -1) {
-				this.props.addFlashMessage('this hobby exist', 'error')
-				this.props.addFlashMessage("Picture can't be large than 2MB", 'error'); 
-				console.log('this chip is blllaaaah');
-				alert()
-			} else {
+				this.props.addFlashMessage("This hobby already exist", 'error'); 
+				return
+		} else {
 				this.setState({
 					hobbies: [...this.state.hobbies, {label: currentHobby}],
 					currentHobby: ''
@@ -97,7 +95,7 @@ class CreateProfile extends PureComponent {
 	}
 	onPictureChange = (info) => {
 		const img = info.file.originFileObj;
-		if(img.size >= 1024 * 1024 ) {
+		if(img.size >= 1024 * 1024 * 2) {
 			this.props.addFlashMessage("Picture can't be large than 2MB", 'error'); 
 			return
 		}
@@ -121,131 +119,133 @@ class CreateProfile extends PureComponent {
 			</Chip>
 		));
 		return (
-			<ValidatorForm className='main-container'
-				onSubmit={this.submit}
-				style={styles.background}
-			>
-			{this.renderFlashMessage()}
-				<div className='transformUp'>
-					<Upload
-						className='avatarDiv'
-						customRequest={() => null}
-						onChange={this.onPictureChange}
-						showUploadList={false}
-					>
-						<img className='trainingPhoto' src={this.state.picture}  />
-					</Upload>
-					<br />
-					<br />
-					<br />
-					<TextValidator
-						style={styles.textfield}
-						name = 'firstName'
-						floatingLabelText='First Name'
-						onChange = {this.handleChange}
-						value = {this.state.firstName}
-						validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
-						errorMessages={['This field is required', 'Name can contain only latin letters', 'Name must be between 2 and 16 characters']}
-					/>
-					<TextValidator
-						style={styles.textfield}
-						name='lastName'
-						floatingLabelText='Last Name'
-						onChange = {this.handleChange}
-						value = {this.state.lastName}
-						validators={['required', 'matchRegexp:^[a-zA-Z-]+$', 'matchRegexp:^[a-zA-Z-]{2,16}$']}
-						errorMessages={['This field is required', 'Last Name can contain only latin letters', 'Last Name must be between 2 and 16 characters']}
-					/>
-					<br />
-					<TextValidator
-						style={styles.textfield}
-						name = 'position'
-						floatingLabelText='Position'
-						onChange = {this.handleChange}
-						value = {this.state.position}
-						validators={['required', 'matchRegexp:^[a-zA-Z ]+$', 'matchRegexp:^[a-zA-Z ]{2,16}$']}
-						errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}
-					/>
-					<TextValidator
-						style={styles.textfield}
-						name = 'fbLink'
-						floatingLabelText='Fb link'
-						onChange = {this.handleChange}
-						value = {this.state.fbLink}
-						validators={[ 'matchRegexp:^(?:(?:http|https):\/\/)?(?:www.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com\/[a-zA-Z\.0-9]+|me\/[a-zA-Z\.0-9]+)']}
-						errorMessages={['Wrong Facebook link']}
-					/>
-					<br />
-					<TextField
-						style={{...styles.textfield, ...styles.radioButtonGroup}}
-						name = 'education'
-						floatingLabelText='Last Education'
-						onChange = {this.handleChange}
-						value = {this.state.education}
-					/>
-					<div
-						style={styles.inline_block}
-					>
-						<RadioButtonGroup
-							name='gender'
-							label='Gender'
-							style={styles.block}
-							valueSelected = {this.state.gender}
-							onChange={this.handleChange}
+			<div>
+				{this.renderFlashMessage()}
+				<ValidatorForm className='main-container'
+					onSubmit={this.submit}
+					style={styles.background}
+				>
+					<div className='transformUp'>
+						<Upload
+							className='avatarDiv'
+							customRequest={() => null}
+							onChange={this.onPictureChange}
+							showUploadList={false}
 						>
-							<RadioButton
-								value='male'
-								label='Male'
-								style={styles.radioButton}
-							/>
-							<RadioButton
-								value='female'
-								label='Female'
-								style={styles.radioButton}
-							/>
-						</RadioButtonGroup>
-					</div>
-					<TextField
-						style={styles.hobby}
-						name = 'currentHobby'
-						hintText='After typing hit Enter'
-						floatingLabelText='Hobbies'
-						onChange = {this.handleChange}
-						value = {this.state.currentHobby}
-						onKeyPress = {this.addChip}
-					/>
-					<div style={styles.wrapper}>
-						{renderHobbies}
-					</div>
-					<hr />
-					<TextField
-						name='jobDescription'
-						floatingLabelText='Job Description'
-						multiLine
-						rows={2}
-						onChange = {this.handleChange}
-						value = {this.state.jobDescription}
-					/>
-					<br />
-					<TextField
-						name='bio'
-						floatingLabelText='Bio'
-						multiLine={true}
-						rows={1}
-						onChange = {this.handleChange}
-						value = {this.state.bio}
-					/>
-					<br />
-					<br />
-					<br />
-					<RaisedButton
-						label='Submit'
-						primary
-						disabled={isDisabled}
-						onClick={this.submit}
-					/>
-				</ div>
-			</ValidatorForm>
+							<img className='trainingPhoto' src={this.state.picture}  />
+						</Upload>
+						<br />
+						<br />
+						<br />
+						<TextValidator
+							style={styles.textfield}
+							name = 'firstName'
+							floatingLabelText='First Name'
+							onChange = {this.handleChange}
+							value = {this.state.firstName}
+							validators={['required', 'matchRegexp:^[a-zA-Z]+$', 'matchRegexp:^[a-zA-Z]{2,16}$']}
+							errorMessages={['This field is required', 'Name can contain only latin letters', 'Name must be between 2 and 16 characters']}
+						/>
+						<TextValidator
+							style={styles.textfield}
+							name='lastName'
+							floatingLabelText='Last Name'
+							onChange = {this.handleChange}
+							value = {this.state.lastName}
+							validators={['required', 'matchRegexp:^[a-zA-Z-]+$', 'matchRegexp:^[a-zA-Z-]{2,16}$']}
+							errorMessages={['This field is required', 'Last Name can contain only latin letters', 'Last Name must be between 2 and 16 characters']}
+						/>
+						<br />
+						<TextValidator
+							style={styles.textfield}
+							name = 'position'
+							floatingLabelText='Position'
+							onChange = {this.handleChange}
+							value = {this.state.position}
+							validators={['required', 'matchRegexp:^[a-zA-Z ]+$', 'matchRegexp:^[a-zA-Z ]{2,16}$']}
+							errorMessages={['This field is required', 'Position can contain only latin letters', 'Position must be between 2 and 16 characters']}
+						/>
+						<TextValidator
+							style={styles.textfield}
+							name = 'fbLink'
+							floatingLabelText='Fb link'
+							onChange = {this.handleChange}
+							value = {this.state.fbLink}
+							validators={[ 'matchRegexp:^(?:(?:http|https):\/\/)?(?:www.)?(mbasic.facebook|m\.facebook|facebook|fb)\.(com\/[a-zA-Z\.0-9]+|me\/[a-zA-Z\.0-9]+)']}
+							errorMessages={['Wrong Facebook link']}
+						/>
+						<br />
+						<TextField
+							style={{...styles.textfield, ...styles.radioButtonGroup}}
+							name = 'education'
+							floatingLabelText='Last Education'
+							onChange = {this.handleChange}
+							value = {this.state.education}
+						/>
+						<div
+							style={styles.inline_block}
+						>
+							<RadioButtonGroup
+								name='gender'
+								label='Gender'
+								style={styles.block}
+								valueSelected = {this.state.gender}
+								onChange={this.handleChange}
+							>
+								<RadioButton
+									value='male'
+									label='Male'
+									style={styles.radioButton}
+								/>
+								<RadioButton
+									value='female'
+									label='Female'
+									style={styles.radioButton}
+								/>
+							</RadioButtonGroup>
+						</div>
+						<TextField
+							style={styles.hobby}
+							name = 'currentHobby'
+							hintText='After typing hit Enter'
+							floatingLabelText='Hobbies'
+							onChange = {this.handleChange}
+							value = {this.state.currentHobby}
+							onKeyPress = {this.addChip}
+						/>
+						<div style={styles.wrapper}>
+							{renderHobbies}
+						</div>
+						<hr />
+						<TextField
+							name='jobDescription'
+							floatingLabelText='Job Description'
+							multiLine
+							rows={2}
+							onChange = {this.handleChange}
+							value = {this.state.jobDescription}
+						/>
+						<br />
+						<TextField
+							name='bio'
+							floatingLabelText='Bio'
+							multiLine={true}
+							rows={1}
+							onChange = {this.handleChange}
+							value = {this.state.bio}
+						/>
+						<br />
+						<br />
+						<br />
+						<RaisedButton
+							label='Submit'
+							primary
+							disabled={isDisabled}
+							onClick={this.submit}
+						/>
+					</ div>
+				</ValidatorForm>
+			</div>
 		);
 	}
 }
