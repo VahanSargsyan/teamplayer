@@ -22,6 +22,11 @@ const app = express();
 
 app
 	.use(cookieParser())
+	.use(bodyParser({
+		keepExtensions: true,
+		limit: 1024 * 1024 * 2,
+		defer: true              
+	}))
 	.use(bodyParser.urlencoded({ extended: true }))
 	.use(bodyParser.json())
 	.use('/', express.static(path.join(__dirname, 'public')))

@@ -1,11 +1,15 @@
-import React, { PureComponent } from 'react';
-import { connect } from 'react-redux';
+import { addFlashMessage, deleteFlashMEssage } from '../../actions/flashMessage.action';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import TextField from 'material-ui/TextField';
-import Chip from 'material-ui/Chip';
-import RaisedButton from 'material-ui/RaisedButton';
-import { Upload, message,  } from 'antd';
 import { RadioButton, RadioButtonGroup } from 'material-ui/RadioButton';
+import RaisedButton from 'material-ui/RaisedButton';
+import TextField from 'material-ui/TextField';
+import React, { PureComponent } from 'react';
+import { bindActionCreators } from 'redux';
+import { Upload, message,  } from 'antd';
+import {Notification} from 're-bulma';
+import { connect } from 'react-redux';
+import Chip from 'material-ui/Chip';
+
 class CreateProfile extends PureComponent {
 	constructor(props) {
 		super(props);
@@ -23,6 +27,29 @@ class CreateProfile extends PureComponent {
 			bio: ''
 		};
 	}
+	renderFlashMessage = () => {
+        if (this.props.flashMessage != null && this.props.flashMessage.msgType == 'error') {
+            return (
+                <div className='danger-notification-div ' 
+					style={{
+						position: 'fixed',
+						top: '50px',
+						left: '25%',
+						width: '50%',
+						zIndex: 100
+					}}
+				>
+                    <Notification color="isDanger" enableCloseButton closeButtonProps={{
+                        onClick: () => {
+                            this.props.deleteFlashMEssage()
+                        }
+                    }}>
+                        {this.props.flashMessage.text}
+                    </Notification>
+                </div>
+            )
+        }
+    }
 	handleChange = e => {
 		const { name, value } = e.target;
 		this.setState({ [name]: value });
@@ -51,12 +78,15 @@ class CreateProfile extends PureComponent {
 		const code = e.keyCode ? e.keyCode : e.which;
 		if (code === 13) {
 			const { currentHobby } = this.state;
+			if (currentHobby === '') return
 			const index = this.state.hobbies.findIndex(hobby=>{
 				return hobby.label === currentHobby
 			})
 			if (index != -1) {
-				// this alert is *experimental* //
-				alert('this hobby exist')
+				this.props.addFlashMessage('this hobby exist', 'error')
+				this.props.addFlashMessage("Picture can't be large than 2MB", 'error'); 
+				console.log('this chip is blllaaaah');
+				alert()
 			} else {
 				this.setState({
 					hobbies: [...this.state.hobbies, {label: currentHobby}],
@@ -67,6 +97,10 @@ class CreateProfile extends PureComponent {
 	}
 	onPictureChange = (info) => {
 		const img = info.file.originFileObj;
+		if(img.size >= 1024 * 1024 ) {
+			this.props.addFlashMessage("Picture can't be large than 2MB", 'error'); 
+			return
+		}
 		const reader = new FileReader();
 		reader.addEventListener('load', () => this.setState({ picture: reader.result }));
 		reader.readAsDataURL(img);
@@ -91,6 +125,7 @@ class CreateProfile extends PureComponent {
 				onSubmit={this.submit}
 				style={styles.background}
 			>
+			{this.renderFlashMessage()}
 				<div className='transformUp'>
 					<Upload
 						className='avatarDiv'
@@ -101,7 +136,8 @@ class CreateProfile extends PureComponent {
 						<img className='trainingPhoto' src={this.state.picture}  />
 					</Upload>
 					<br />
-					<hr />
+					<br />
+					<br />
 					<TextValidator
 						style={styles.textfield}
 						name = 'firstName'
@@ -258,9 +294,16 @@ const styles = {
 	}
 };
 
+const mapDispatchToProps = (dispatch) => {
+	return bindActionCreators({
+		addFlashMessage,
+		deleteFlashMEssage
+	}, dispatch);
+}
 const mapStateToProps = (state) => {
     return {
-        user: state.auth.user
+		flashMessage: state.flashMessage,
+		user: state.auth.user
     }
 }
-export default connect(mapStateToProps)(CreateProfile);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProfile);
