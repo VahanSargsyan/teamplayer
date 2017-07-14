@@ -30,11 +30,11 @@ class FileUpload extends PureComponent {
         return (
             <div className='file-upload'>
                 <input type='file' onChange={this.handleFileChange} id="file-upload" style={{display: 'none'}}/>
-                <label htmlFor='file-upload'>Upload</label><br/>
+                <label htmlFor='file-upload' className='file-upload-label'>Upload Picture</label><br/>
                 <SweetAlert
                   show={this.state.sizeErr}
                   html
-                  title="<p style='font-size:22px'>File size is too large</p>"
+                  title="<p style='font-size:22px'>Image size cannot be larger than 2MB</p>"
                   type="warning"
                   onConfirm={() => this.setState({sizeErr: false })}
                 />

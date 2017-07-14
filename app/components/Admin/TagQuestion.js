@@ -22,7 +22,6 @@ class TagQuestion extends PureComponent {
     componentDidMount() {
         fetch(`${FETCH_URL}/api/autocomplete/employeeNames`).then(result=>result.json())
             .then(result=>{
-                console.log(result, "resultttt")
                 this.setState({dataSource: result})
             })
             .catch(err=>err)
@@ -97,20 +96,22 @@ class TagQuestion extends PureComponent {
                 <FileUpload
                     uploadImage={this.uploadImage}
                 />
-                <Canvas
-                    ref='canvasComponent'
-                    tags = {this.state.tags}
-                    imageLoaded = {this.state.imageLoaded}
-                    addTags={this.addTags}
-                />
-                <TaggedNames
-                    dataSource={this.state.dataSource}
-                    tags={this.state.tags}
-                    onNewRequest={this.onNewRequest}
-                    removeTagHandler={this.removeTagHandler}
-                    handleInputChange={this.handleInputChange}
-                    submit={this.submit}
-                />
+                <div style={{display: 'flex'}}>
+                    <Canvas
+                        ref='canvasComponent'
+                        tags = {this.state.tags}
+                        imageLoaded = {this.state.imageLoaded}
+                        addTags={this.addTags}
+                    />
+                    <TaggedNames
+                        dataSource={this.state.dataSource}
+                        tags={this.state.tags}
+                        onNewRequest={this.onNewRequest}
+                        removeTagHandler={this.removeTagHandler}
+                        handleInputChange={this.handleInputChange}
+                        submit={this.submit}
+                    />
+                </div>
                 <SweetAlert
                   show={this.state.showAlert}
                   html

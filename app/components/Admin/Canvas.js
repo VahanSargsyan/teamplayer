@@ -27,7 +27,7 @@ class Canvas extends PureComponent {
         this.topContext.fillRect(rect.startX, rect.startY, 16, 16)
         this.topContext.fillStyle = 'white'
         this.topContext.textBaseline = "top"
-        this.topContext.font = "12px Georgia"
+        this.topContext.font = "12px"
         this.topContext.fillText(number, rect.startX + 5, rect.startY)
     }
     onMouseUp = () => {
@@ -45,7 +45,6 @@ class Canvas extends PureComponent {
         }
     }
     removeAndRedrawTags = () => {
-        console.log(this.props.tags)
         this.topContext.clearRect(0, 0, this.canvasWidth, this.canvasHeight)
         for(let index in this.props.tags) {
             const tag = this.props.tags[index]
@@ -82,8 +81,8 @@ class Canvas extends PureComponent {
     }
     defaultText = () => {
         this.topContext.fillStyle = 'black'
-        this.topContext.font = "20px Georgia"
-        this.topContext.fillText('Please upload a photo to preview', 100, 100)
+        this.topContext.font = "20px Raleway, sans-serif"
+        this.topContext.fillText('Please upload a photo to preview', 150, 150)
     }
     clearCanvas = () => {
         this.context.clearRect(0, 0, this.canvasWidth, this.canvas.height)
