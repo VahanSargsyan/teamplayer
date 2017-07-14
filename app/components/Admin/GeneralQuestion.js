@@ -59,12 +59,21 @@ class GeneralQuestion extends PureComponent {
 
     handlePic = (e) => {
         const file = this.refs.file.files[0];
+        if(file.size >= 1024 * 1024 * 2) {
+            this.setState({error: 'Image size cannot be larger than 2MB'});
+            return;
+        } 
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
         reader.onloadend = function (e) {
             this.setState({ data: {...this.state.data, picture: reader.result }})
         }.bind(this);
+    }
+
+    deletePicture = () => {
+        this.setState({data: {...this.state.data, picture: ''}});
+        this.refs.file.value = '';
     }
 
     handleAnswer = ({ target }) => {
@@ -124,8 +133,11 @@ class GeneralQuestion extends PureComponent {
                         <div style={styles.field}>  
                         {
                             this.state.data.picture ? (
-                                <img src={this.state.data.picture}
-                                style={styles.picture} />
+                                <div style={styles.pictureContainer}>
+                                    <img src={this.state.data.picture}
+                                    style={styles.picture} />
+                                    <img src={'/cross.svg'} onClick={this.deletePicture} style={styles.deletePicture}/>
+                                </div>
                             ) : ( null )
                         }              
                         </div>
