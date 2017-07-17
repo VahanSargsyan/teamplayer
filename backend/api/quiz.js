@@ -2,17 +2,48 @@ const express = require('express');
 const mongoose = require('mongoose');
 const random = require('mongoose-random');
 const Employee = mongoose.model('Employee');
-
+const adminQuestion = mongoose.model('adminQuestion')
 const quiz = express.Router();
 
 const getRandom = (to) => Math.floor(Math.random() * to);
-
 const shuffle = (a) => {
     for (let i = a.length; i; i--) {
         let j =  getRandom(i);
         [a[i - 1], a[j]] = [a[j], a[i - 1]];
     }
 };
+const getQuiz = (user, index, result, rightAnswers, allQuestions) => {
+    
+    const randIndex =  getRandom(allQuestions.length);
+    if(allQuestions.length) {
+        let newQuizes;
+        if (allQuestions[randIndex].type === 'tag') {
+            let answer = 0
+            const names =  allQuestions[randIndex].answers;
+            const newAnswers = [...allQuestions[randIndex].answers];
+            shuffle(newAnswers);
+            for (let i = 0; i < names.length; i++) {
+                answer = 10 * answer + (newAnswers.indexOf(names[i]) + 1)
+            }
+            const { type, who, answers } = allQuestions[randIndex];
+            newQuizes = {type, who, answers}
+            newQuizes.answers = newAnswers
+            
+            rightAnswers.push(answer);
+            allQuestions.splice(randIndex, 1);
+        } else {
+            rightAnswers.push(allQuestions[randIndex].rightAnswer);
+            newQuizes = allQuestions[randIndex];
+            allQuestions.splice(randIndex, 1);
+        }
+        return newQuizes;
+    } else {
+        return  getRandom(2) === 1 ?
+            nameQuizGenerator(user, index, result, rightAnswers) :
+            picQuizGenerator(user, index, result, rightAnswers);
+    }
+    
+}
 const nameQuizGenerator = (user, index, users, rightAnswers) => {
     const ask = user.picture;
     const answers = [user.firstName]
@@ -29,7 +60,7 @@ const nameQuizGenerator = (user, index, users, rightAnswers) => {
     }
     shuffle(answers)
     rightAnswers.push(answers.indexOf(user.firstName))
-    return {type: 'picture', who: ask, answers: answers }
+    return {type: 'picture', who:{picture: ask}, answers: answers }
 } 
  const picQuizGenerator = (user, index, users, rightAnswers) => {
     const ask = user.firstName;
@@ -47,7 +78,7 @@ const nameQuizGenerator = (user, index, users, rightAnswers) => {
     }
     shuffle(answers)
     rightAnswers.push(answers.indexOf(user.picture))
-    return {type: 'name', who: ask, answers: answers }
+    return {type: 'name', who:{text: ask}, answers: answers }
 }
 
 const compare = (arr1, arr2) => {
@@ -59,35 +90,46 @@ const compare = (arr1, arr2) => {
             result++
         }
     }
-    return result;  
+    return result / arr1.length * 100;  
 }
-quiz.get('/', (req, res) => {
+
+quiz.get('/', async (req, res) => {
     const rightAnswers = [];
-    const {_id} = req.user; 
-    const filter = {_id: {$ne: _id}};
-    Employee.find({_id: {$ne: _id}})
-        .then(result => {
-            const shuffled = [...result]
-            shuffle(shuffled)
-            return shuffled
-        })
-        .then(result => res.send(result.map((user, index) => getRandom(2) === 1 ?
-            nameQuizGenerator(user, index, result, rightAnswers) :
-            picQuizGenerator(user, index, result, rightAnswers))))
-        .then(() => Employee.update({_id}, {$set: { rightAnswers }}, {upsert: true}))
-        .catch(err => console.log(err))
+    const { _id } = req.user; 
+    try {
+        const allQuestions = await adminQuestion.find({}).exec();
+        const result = await Employee.find({_id: {$ne: _id}});
+
+        const shuffled = [...result];
+        shuffle(shuffled); 
+            
+        const newResult = result.map((user, index) => {
+            const random = getRandom(3);
+            if (random === 1) {
+                return nameQuizGenerator(user, index, result, rightAnswers);
+            } else if (random === 2) {
+                return picQuizGenerator(user, index, result, rightAnswers);
+            } else {
+                return getQuiz(user, index, result, rightAnswers, allQuestions);
+            }
+        });
         
+        res.json(newResult);
+        await Employee.update({_id}, {$set: { rightAnswers }}, {upsert: true});
+    } catch(e) {
+        console.log(e);
+    }
+   
 });
 
 quiz.post('/', (req, res) => {
-    console.log(`aaaaaaaaaaaaaaaa!`)
+    console.log('post');
     const { _id } = req.user; 
     const { answers } = req.body;
     Employee.findById(_id)
         .then(result => {
-            const quizRezult = compare(result.rightAnswers, answers);
-            console.log(`quiz result is ---> ${typeof quizRezult}`)
-            Employee.update({_id}, {$set: {quizRezults: [quizRezult]} }, {upsert: true});
+            const quizResults = compare(result.rightAnswers, answers);
+            Employee.update({_id}, {$set: {quizResults} }, {upsert: true}).exec();
             res.send(result.rightAnswers); 
         });
 });

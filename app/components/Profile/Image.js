@@ -4,6 +4,7 @@ import { bindActionCreators } from 'redux';
 
 import { closeEditableItem,
         updateProfileData } from '../../actions/profile.action';
+import { addFlashMessage } from '../../actions/flashMessage.action';
 
 const styles = {
     groupStyle: {
@@ -32,6 +33,11 @@ class Image extends PureComponent {
 
     onChange = () => {   
         const file = this.refs.file.files[0];
+        if(file.size >= 1024 * 1024 * 2) {
+            this.props.addFlashMessage("Image size can't be larger than 2MB", 'error');
+            this.refs.file.value = '';
+            return;
+        } 
         const reader = new FileReader();
         reader.readAsDataURL(file);
 
@@ -70,7 +76,8 @@ const mapStateToProps = (state) => {
 
 const mapDisatchToProps = (dispatch) => {
     return bindActionCreators({
-        updateProfileData
+        updateProfileData,
+        addFlashMessage
     }, dispatch);
 }
 

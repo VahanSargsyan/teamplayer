@@ -13,6 +13,8 @@ import Grid from './Grid/grid';
 import Auth from './RouteMiddleware/Auth';
 import Guest from './RouteMiddleware/Guest';
 import Quizes from './Quiz/Quizes';
+import createQuestion from './Admin/createQuestion';
+import Admin from './RouteMiddleware/Admin';
 import Header from './Header';
 import insertCss from 'insert-css';
 import css from 're-bulma/build/css';
@@ -23,11 +25,18 @@ try {
 catch (e) {}
 
 class Layout extends PureComponent {
+
     renderHeader = () => {
-        if (['/createProfile', '/team', '/profile', '/quiz', '/training'].includes(this.props.location.pathname)) {
-            return <Header/>
+
+        if (['/createProfile', '/team', '/profile', '/quiz', '/training',  '/createQuestion'].includes(this.props.location.pathname)) {
+            return (
+                <div>
+                    <Header/>
+                </div>
+            )
         }
     }
+
     render() {
         return (
             <div>
@@ -39,6 +48,7 @@ class Layout extends PureComponent {
                     <Route path='/profile' component={Auth(Profile)}/>
                     <Route path='/team' component={Auth(Grid)}/>
                     <Route path='/quiz' component={Auth(Quizes)}/>
+                    <Route path='/createQuestion' component={Admin(createQuestion)}/>
                     <Route component={ErrorPage}/>
                 </Switch>
             </div>

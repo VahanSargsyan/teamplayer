@@ -9,3 +9,4 @@ db/*
 *.css
 bundle.js
 .history/
+yarn.lock

@@ -1,10 +1,10 @@
 import React, {PureComponent} from 'react';
 import RaisedButton from 'material-ui/RaisedButton';
 import '../styles/login.sass';
-import {connect} from 'react-redux'
-import {bindActionCreators} from 'redux'
-import {deleteFlashMEssage} from '../actions/flashMessage.action'
-import {Notification} from 're-bulma'
+import {connect} from 'react-redux';
+import {bindActionCreators} from 'redux';
+import {deleteFlashMEssage} from '../actions/flashMessage.action';
+import {Notification} from 're-bulma';
 
 class Login extends PureComponent {
     

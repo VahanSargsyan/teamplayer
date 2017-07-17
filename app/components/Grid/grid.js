@@ -33,6 +33,19 @@ class Grid extends PureComponent {
         e.stopPropagation()
     }
 
+    percentColor = (percent) => {
+        switch(true){
+            case (percent >= 80 && percent <= 100):
+                return 'green'
+            case (percent >= 60 && percent < 80):
+                return 'yellow'
+            case (percent >= 40 && percent < 60):
+                return 'orange'
+            case (percent < 40):
+                return 'red'
+        }
+    }
+
     render(){
         return(          
             <div>		
@@ -40,6 +53,10 @@ class Grid extends PureComponent {
                 {this.props.users.map((user, i) => 
                     <div key={i} className='Container column is-one-quarter-desktop is-one-third-tablet is-full-mobile'>
                         <div  className='gridContainer ' onClick={()=> this.activateUser(user)}>
+                            {user.quizResults ?
+                              <div className='percent' style={{color: this.percentColor(user.quizResults)}}>{`${user.quizResults}%`}</div>
+                            : <div className='percent'>N/A</div>
+                            }
                             <div className='ImageCountainer'>
                                 <img className='circularImage' src={user.picture}  />
                                 {user.fbLink ? 
@@ -76,26 +93,26 @@ class Grid extends PureComponent {
                                 <br/>{this.state.activeUser.email}
                             </div>
                         </div>
-                        <div className='Hobbies'>
+                        {this.state.activeUser.hobbies.length ? <div className='Hobbies'>
                             <b>Hobbies</b>
-                            <div className='HobbyInfo'>
+                            <div className='wrapInfo'>
                                 {this.state.activeUser.hobbies.map((hobby)=>
                                        `${hobby.label} `
                                     )}
                             </div>
-                        </div>
-                        <div className='Education'>
+                        </div> : null}
+                        {this.state.activeUser.education ? <div className='Education'>
                             <b>Education</b>
-                            <div className='EduInfo'>
+                            <div className='wrapInfo'>
                                 {this.state.activeUser.education}
                             </div>
-                        </div>
-                        <div className='JobDescription'>
+                        </div> : null}
+                        {this.state.activeUser.jobDescription ? <div className='JobDescription'>
                             <b>Job Description</b>
-                            <div className='DescribeJob'>
+                            <div className='wrapInfo'>
                                 {this.state.activeUser.jobDescription}
                             </div>
-                        </div>
+                        </div> : null}
                     </Modal> :
                     null
                 }

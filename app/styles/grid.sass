@@ -1,165 +1,224 @@
-html 
-    overflow-y: hidden
-
-body 
-    background-color: #F3F7F9
-    
-     
-.UnderHeader
-    padding: 40px
-    padding-left: 10%
-    padding-right: 10%
-
-    .Container
-
-        display: flex
-        align-items: stretch
-        place-content: stretch
-        flex: none
-        width: 25%
-        padding: 15px
-        font-size: 16px !important
-
-        .gridContainer
-        
-            
-            
-            align-items: stretch
-            place-content: stretch
-            height: 100%
-            width: 100%
-                
-            -webkit-box-shadow: 2px 2px 5px 2px rgba(122,122,122,0.25)
-            -moz-box-shadow: 2px 2px 5px 2px rgba(122,122,122,0.25)
-            box-shadow: 2px 2px 5px 2px rgba(122,122,122,0.25)
-            background-color: white
-            text-align: center
-            cursor: pointer
-            min-width: 155px
-            
-
-            .ImageCountainer
-                text-align: center
-                position: relative
-                width: 150px
-                height: 150px
-                left: 50%
-                transform: translateX(-50%)
-               
-
-                .circularImage    
-                    margin: auto
-                    margin-top: 10px
-                    position: absolute
-                    width: 100%
-                    height: auto
-                    background-size: cover
-                    display: block
-                    border-radius: 100px
-                    border: 3px solid #ccc
-                    
-
-                .circularFacebook
-                    left: 96px
-                    top: 105px
-                    position: absolute
-                    margin: 3px
-                    width: 60px
-                    height: auto
-                    z-index: 1
-                    background-size: cover
-                    display: block
-
-            .name
-                display: inline-block
-                margin-top: 15px    
-                margin-left: 0px
-                word-wrap: break-word
-                align-self: center
-                
-                
-                
-            .position
-                margin-top: 0px
-                margin-left: 0px  
-                display: block 
-                margin-bottom: 10px
-
-
-
-      
+.vertical-center-modal
+	white-space: inherit !important
 
 .ant-modal-body
-    font-size: 20px !important
+	font-size: 20px !important
+	.modalContainer
 
-    .modalContainer
+		display: flex
+		flex-direction: column
 
-        height: 80% !important
-        display: inline-block
-        display: flex
-        flex-direction: row
-        justify-content: space-around
-        border-bottom: 1px solid rgb(180,187,200)
+		align-items: center
+		justify-content: space-around
+		border-bottom: 1px solid rgb(180,187,200)
 
 
-        .ImageModalCountainer
+		.ImageModalCountainer
 
-            text-align: center
-            position: relative
-            width: 150px
-            height: 170px
-            display: inline-block
-            float: left
-            
+			text-align: center
+			position: relative
+			width: 150px
+			height: 170px
+			display: inline-block
+			float: left
 
-            .circularModalImage
 
-                margin: auto
-                margin-left: 3px
-                position: absolute
-                width: 150px
-                height: 150px
-                background-size: cover
-                display: block
-                border-radius: 100px
-                border: 3px solid #ccc
-            
+			.circularModalImage
 
-        .nameModal
-            margin-right: 7px
-            margin-top: 28px
-            text-align: center
-            display: inline-block
-            word-wrap: break-word
+				margin: auto
+				margin-left: 3px
+				position: absolute
+				width: 150px
+				height: 150px
+				background-size: cover
+				display: block
+				border-radius: 100px
+				border: 3px solid #ccc
 
-    .Hobbies
-        text-align: center
-        border-bottom: 1px solid rgb(180,187,200)
 
-    .Education
-        text-align: center
-        border-bottom: 1px solid rgb(180,187,200)
+		.nameModal
+			margin-right: 7px
+			margin-top: 10px
+			text-align: center
+			display: inline-block
+			word-wrap: break-word
+			margin-bottom: 10px
 
-    .JobDescription
-        text-align: center
+	.Hobbies
+		overflow: hidden
+		text-align: center
+		margin-top: 10px
+		border-bottom: 1px solid rgb(180,187,200)
+
+	.Education
+		word-wrap: break-word
+		margin-top: 10px
+		text-align: center
+		border-bottom: 1px solid rgb(180,187,200)
+
+	.JobDescription
+		word-wrap: break-word
+		margin-top: 10px
+		margin-bottom: 10px
+		text-align: center
+html
+	overflow-y: hidden
+
+body
+	background-color: #F3F7F9
+
+
+.UnderHeader
+	padding: 40px
+	padding-left: 10%
+	padding-right: 10%
+
+	.Container
+
+		display: flex
+		align-items: stretch
+		place-content: stretch
+		flex: none
+		width: 25%
+		padding: 15px
+		font-size: 16px !important
+
+		.gridContainer
+			align-items: stretch
+			place-content: stretch
+			height: 100%
+			width: 100%
+			box-shadow: 2px 2px 5px 2px rgba(122,122,122,0.25)
+			background-color: white
+			text-align: center
+			cursor: pointer
+			min-width: 155px
+
+
+			.ImageCountainer
+				text-align: center
+				position: relative
+				width: 150px
+				height: 150px
+				left: 50%
+				transform: translateX(-50%)
+
+
+				.circularImage
+					margin: auto
+					margin-top: 10px
+					position: absolute
+					width: 100%
+					height: auto
+					background-size: cover
+					display: block
+					border-radius: 100px
+					border: 3px solid #ccc
+
+
+				.circularFacebook
+					left: 96px
+					top: 105px
+					position: absolute
+					margin: 3px
+					width: 60px
+					height: auto
+					z-index: 1
+					background-size: cover
+					display: block
+
+			.name
+				display: inline-block
+				margin-top: 15px
+				margin-left: 0px
+				word-wrap: break-word
+				align-self: center
+
+
+
+				.position
+					margin-top: 0px
+					margin-left: 0px
+					display: block
+					margin-bottom: 10px
+
+			.percent
+				text-align: right
+				padding-right: 12px
+				padding-top: 8px
+				font-size: 20px
+
+			.ImageCountainer
+				text-align: center
+				position: relative
+				width: 150px
+				height: 150px
+				left: 50%
+				transform: translateX(-50%)
+
+
+				.circularImage
+				    margin: auto
+				    margin-top: -10px
+				    position: absolute
+				    width: 100%
+				    height: auto
+				    background-size: cover
+				    display: block
+				    border-radius: 100px
+				    border: 3px solid #ccc
+
+
+				.circularFacebook
+				    left: 96px
+				    top: 92px
+				    position: absolute
+				    margin: 3px
+				    width: 60px
+				    height: auto
+				    z-index: 1
+				    background-size: cover
+				    display: block
+
+			.name
+				display: inline-block
+				margin-top: 2px
+				margin-left: 0px
+				word-wrap: break-word
+				align-self: center
+
+
+
+			.position
+				margin-top: 0px
+				margin-left: 0px
+				display: block
+				margin-bottom: 10px
 
 
 .vertical-center-modal
-    text-align: center
-    white-space: nowrap
-    
+	text-align: center
+	white-space: nowrap
+
 
 .vertical-center-modal:before
-    content: ''
-    display: inline-block
-    height: 100%
-    vertical-align: middle
-    width: 0
+	content: ''
+	display: inline-block
+	height: 100%
+	vertical-align: middle
+	width: 0
 
 
-.vertical-center-modal .ant-modal 
-    display: inline-block
-    vertical-align: middle
+.vertical-center-modal .ant-modal
+	display: inline-block
+	vertical-align: middle
+	top: 0
+	text-align: left
+
+.overlay
+    position: absolute
     top: 0
-    text-align: left
-
+    left: 0
+    z-index: 3
+    width: 100%
+    height: 100%
