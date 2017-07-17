@@ -20,10 +20,9 @@ class Header extends PureComponent {
     }
 
     handleClickOutside = (event)=> {
-        if(this.refs.menu && !this.refs.menu.contains(event.target)) {
+        if(this.refs.menu && !this.refs.menu.contains(event.target) && !this.refs.navToggle.contains(event.target)) {
             this.handleToggle()
         }
-
     }
 
     renderAdminPanel = () => {
@@ -60,7 +59,10 @@ class Header extends PureComponent {
 						</NavLink>
                     </NavItem>
                 </NavGroup>
-                <NavToggle onClick={this.handleToggle} isActive={this.state.toggleIsOpen}/>
+                <div ref = 'navToggle' >
+                    <NavToggle onClick={this.handleToggle} isActive={this.state.toggleIsOpen}/>
+                </div>
+
                 {
                     this.state.toggleIsOpen ?
                         <div className="menu" ref='menu'>
