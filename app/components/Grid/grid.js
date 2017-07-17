@@ -35,11 +35,13 @@ class Grid extends PureComponent {
 
     percentColor = (percent) => {
         switch(true){
+
             case (percent >= 75 && percent <= 100):
                 return 'green'
             case (percent >= 50 && percent < 75):
                 return 'orange'
             case (percent < 50):
+
                 return 'red'
         }
     }
