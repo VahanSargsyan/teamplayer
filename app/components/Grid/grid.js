@@ -35,13 +35,13 @@ class Grid extends PureComponent {
 
     percentColor = (percent) => {
         switch(true){
-            case (percent >= 80 && percent <= 100):
+
+            case (percent >= 75 && percent <= 100):
                 return 'green'
-            case (percent >= 60 && percent < 80):
-                return 'yellow'
-            case (percent >= 40 && percent < 60):
+            case (percent >= 50 && percent < 75):
                 return 'orange'
-            case (percent < 40):
+            case (percent < 50):
+
                 return 'red'
         }
     }
@@ -96,8 +96,8 @@ class Grid extends PureComponent {
                         {this.state.activeUser.hobbies.length ? <div className='Hobbies'>
                             <b>Hobbies</b>
                             <div className='wrapInfo'>
-                                {this.state.activeUser.hobbies.map((hobby)=>
-                                       `${hobby.label} `
+                                {this.state.activeUser.hobbies.map((hobby, idx)=>
+                                       `${hobby.label}${idx !== this.state.activeUser.hobbies.length - 1 ? ', ' : ' '}`
                                     )}
                             </div>
                         </div> : null}
