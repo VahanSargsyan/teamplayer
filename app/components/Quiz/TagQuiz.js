@@ -18,7 +18,7 @@ const SortableItem = SortableElement(({value}) => {
 		return <div style={style}>{value}</div>
 	}
 );
- 
+
 const SortableList = SortableContainer(({items}) => {
 	return (
 		<div className='sortable-list'>
@@ -52,7 +52,7 @@ class TagQuiz extends PureComponent {
 	handleSubmit = () => {
 		let result = 0;
 		this.state.list.forEach((item, idx) => {
-			result += Math.pow(10, 3 - idx) * this._answerIndex(item);
+			result += Math.pow(10, this.state.list.length - 1 - idx) * this._answerIndex(item);
 		})
 		this.props.addAnswer(result);
 	}
